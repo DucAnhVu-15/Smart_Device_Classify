@@ -105,25 +105,48 @@ ba head độc lập dùng chung một encoder.
 
 ---
 
-## 3. Chạy
-
-Thứ tự bắt buộc:
+## 3. Cấu trúc và thứ tự chạy
 
 ```
-1. Code_data_collection/closedset_field_model.ipynb
-      └─► Models/<timestamp>_field_closedset/{model.joblib, meta.json}
-
-2. Code_SDC_V1/08_build_sdc_iden.ipynb
-      └─► Models/<timestamp>_iden/sdc_iden.onnx
+Code/
+├── pipeline/
+│   ├── 00_common.ipynb          định nghĩa dùng chung — mọi bước tự %run nó, không chạy riêng
+│   ├── run_all.ipynb            chạy các bước theo thứ tự, dừng ở bước lỗi
+│   ├── predata/                 1. dựng dữ liệu
+│   │   ├── 01_extract_cic.ipynb           pcap CIC-2022 → Data/features/*_all.csv
+│   │   ├── 02_extract_capture.ipynb       pcap tự thu → Data/features/*_capture.csv
+│   │   ├── 03_build_dataset.ipynb         *_all.csv → Data/sessions_verified.parquet
+│   │   └── 04_add_capture_devices.ipynb   gộp thiết bị FIELD → sessions(_verified).parquet
+│   ├── train_model/             2. train và đo
+│   │   ├── 05_train_closedset.ipynb       → Models/<ts>_field_closedset/   (production)
+│   │   ├── 06_train_openset.ipynb         → Models/<run_id>/  tiered       (đánh giá)
+│   │   ├── 07_evaluate_openset.ipynb      time split, thiết bị/lớp chưa thấy
+│   │   └── 08_test_openset.ipynb          IoT Sentinel, CIC, FIELD
+│   └── out_model/               3. đóng gói model
+│       ├── 09_build_sdc_iden.ipynb        → Models/<ts>_iden/sdc_iden.onnx  (BẢN DEPLOY)
+│       ├── 10_activate_openset.ipynb      ghi Models/current_model.json (cờ tắt mặc định)
+│       └── 11_export_onnx_openset.ipynb   → sdc_multihead.onnx
+├── router/hostname_sources.py   đặc tả nguồn hostname cho agent trên router (stdlib, chưa nối vào pipeline)
+└── archive/                     notebook cũ, không thuộc pipeline — xem archive/README.md
 ```
 
-Notebook 2 gọi `latest_run("*_field_closedset")`; không có bước 1 thì nó dừng bằng
-AssertionError. `closedset_field_model.ipynb` tự `%run -i` notebook `03_train_model.ipynb`
-để lấy `fit_encoder` / `apply_encoder` / `make_model` — dò đường dẫn bằng glob, nên
-`03` nằm ở đâu dưới `Code/` cũng được.
+Chạy theo số thứ tự, hoặc mở `pipeline/run_all.ipynb`, bật/tắt từng bước trong `STEPS` rồi Run All.
 
-**Môi trường:** cần `nbformat` (cho `%run -i` file `.ipynb`), `scikit-learn`, `skl2onnx`,
-`onnx`, `onnxruntime`, `pandas`, `pyarrow`, `joblib`, `matplotlib`.
+- **Bản deploy** chỉ cần `01 → 05 → 09` (thêm `02`–`04` khi có pcap tự thu mới).
+- **Nhánh open-set** `06 → 07 → 08 → 10 → 11` dùng để đánh giá, không cần cho bản deploy.
+- `01` cần pcap thô CIC-2022 (`Data/1-Power`, `Data/2-Idle`), chỉ có trên server.
+- Thư mục pcap tự thu là `CAPTURE_DIR` trong `00_common`: tự chọn `Data/data_pcap` (server) hoặc
+  `Data/data_pcap_capture` (máy local).
+- Sửa hàm trong `00_common` xong phải khởi động lại kernel của notebook đang mở.
+
+⚠️ **Nguồn dữ liệu chưa khép kín.** `03` ghi `sessions_verified.parquet` từ `*_all.csv`, nhưng `04`
+dựng lại chính file đó từ `Data/sessions.parquet` — tức kết quả của `03` bị ghi đè. Phần CIC trong
+`sessions.parquet` hiện không bước nào sinh ra; nó là file có sẵn từ phiên bản cũ.
+
+`09_build_sdc_iden` gọi `latest_run("*_field_closedset")`; không có `05` thì nó dừng bằng AssertionError.
+
+**Môi trường:** cần `nbformat`, `nbclient` (cho `%run -i` file `.ipynb` và `run_all`), `scikit-learn`,
+`skl2onnx`, `onnx`, `onnxruntime`, `pandas`, `pyarrow`, `joblib`, `matplotlib`, `scapy`.
 
 **Kiểm chứng bản dựng.** Contract nhúng trong ONNX mang hai hash; dựng lại đúng thì phải khớp:
 
