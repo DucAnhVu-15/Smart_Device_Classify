@@ -124,6 +124,7 @@ Code/
 │   │   └── 04_add_capture_devices.ipynb   gộp thiết bị FIELD → sessions(_verified).parquet
 │   ├── train_model/             2. train và đo
 │   │   ├── 05_train_closedset.ipynb       → Models/<ts>_field_closedset/   (production)
+│   │   ├── 05b_train_os_head.ipynb        → Models/<ts>_os/  head OS + cascade (thử nghiệm, chưa vào ONNX)
 │   │   ├── 06_train_openset.ipynb         → Models/<run_id>/  tiered       (đánh giá)
 │   │   ├── 07_evaluate_openset.ipynb      time split, thiết bị/lớp chưa thấy
 │   │   └── 08_test_openset.ipynb          IoT Sentinel, CIC, FIELD
