@@ -20,8 +20,10 @@ là một *cửa sổ* quan sát của một MAC trong một file pcap.
 | `POWER` | 117 | | CIC IoT 2022 |
 | `FIELD` | **50** | **12** | tự thu, 14/09/2026 |
 
-44 cột đặc trưng mỗi dòng (28 cột DHCP, 3 cờ nguồn, 5 cột TLS, 4 cột text token hoá,
-4 cột khoá tra L0). Bảng đầy đủ nằm ở `FEATURES.md` ngoài repo.
+Rừng học trên 40 cột đặc trưng mỗi dòng (28 cột DHCP, 3 cờ nguồn, 5 cột TLS, 4 cột text
+token hoá). Model deploy chỉ nhận **12 cột chuỗi**: 9 cột chuỗi trong số đó cộng 3 cột khoá
+tra L0. 31 cột số còn lại (`has_*`, `dhcp_opt_*`, `dhcp_prl_len`) được tính ngay trong graph
+từ các chuỗi. Bảng đầy đủ nằm ở `FEATURES.md` ngoài repo.
 
 ### Vai trò hai tập
 
@@ -71,7 +73,10 @@ Số dòng thực sự vào train: `make` 8.189 · `type` **5.718** · `model` 8
 ## 2. Kiến trúc quyết định
 
 ```
-44 cột  ──►  L0 luật tất định     (OUI · DHCP hostname · mDNS model)   conf = 1.0
+12 cột  ──►  tự tính 31 cột số (has_* · dhcp_opt_* · dhcp_prl_len)
+             │
+             ▼
+             L0 luật tất định     (OUI · DHCP hostname · mDNS model)   conf = 1.0
              │ trượt
              ▼
              L1 vân tay exact     (dhcp_prl + dhcp_vci + tls_fp)
@@ -151,7 +156,7 @@ dựng lại chính file đó từ `Data/sessions.parquet` — tức kết quả
 **Kiểm chứng bản dựng.** Contract nhúng trong ONNX mang hai hash; dựng lại đúng thì phải khớp:
 
 ```
-columns_sha256 = 7be7e5d0deca35db6b34d343a041bf19183199aec58671975dea78b1b2b05773
+columns_sha256 = 4537a2bbdec921acbe56d10f4f984c2bbeab0b19fd8e67fa71f0ace2ceba6261   (sdc-iden-onnx-v2, 12 cột)
 labels_sha256  = db44cab1f7ab501193ef0526d4886f3985cc0d3d65237df65b146517c9b17a07
 ```
 
