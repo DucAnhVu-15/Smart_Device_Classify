@@ -131,7 +131,10 @@ Code/
 │   └── out_model/               3. đóng gói model
 │       ├── 09_build_sdc_iden.ipynb        → Models/<ts>_iden/sdc_iden.onnx  (BẢN DEPLOY)
 │       ├── 10_activate_openset.ipynb      ghi Models/current_model.json (cờ tắt mặc định)
-│       └── 11_export_onnx_openset.ipynb   → sdc_multihead.onnx
+│       ├── 11_export_onnx_openset.ipynb   → sdc_multihead.onnx
+│       ├── 12_export_tflite_os.ipynb      Models/<ts>_os/ → tflite/sdc_os_forest.tflite (contract nhúng ở metadata `sdc.contract`)
+│       ├── 13_export_tflite_iden.ipynb    sdc_iden.onnx + head OS (05b) → <ts>_os/tflite_iden_os/sdc_iden_os.tflite (12 chuỗi → make/type/model, cần Flex)
+│       └── 14_build_sdc_iden_os_onnx.ipynb sdc_iden.onnx + head OS (05b) → <ts>_os/onnx_iden_os/sdc_iden_os.onnx (cùng mô hình với 13, chạy onnxruntime)
 ├── router/hostname_sources.py   đặc tả nguồn hostname cho agent trên router (stdlib, chưa nối vào pipeline)
 └── archive/                     notebook cũ, không thuộc pipeline — xem archive/README.md
 ```
@@ -153,6 +156,10 @@ dựng lại chính file đó từ `Data/sessions.parquet` — tức kết quả
 
 **Môi trường:** cần `nbformat`, `nbclient` (cho `%run -i` file `.ipynb` và `run_all`), `scikit-learn`,
 `skl2onnx`, `onnx`, `onnxruntime`, `pandas`, `pyarrow`, `joblib`, `matplotlib`, `scapy`.
+Riêng `12`, `13` cần thêm `tensorflow` (Python 3.14: `pip install --pre tensorflow`); `12` nên có `ai-edge-litert`.
+File của `13` dùng op Flex: `tensorflow` ≥ 2.20 (mọi OS) **không** chạy được nó vì đã bỏ Flex delegate khỏi
+`tf.lite.Interpreter` — notebook khi đó đối chiếu bằng graph TF và ghi `parity_inputs.npz`; kiểm file `.tflite`
+bằng `tensorflow==2.16.2` trên Linux (Python 3.12), bản này còn Flex.
 
 **Kiểm chứng bản dựng.** Contract nhúng trong ONNX mang hai hash; dựng lại đúng thì phải khớp:
 
