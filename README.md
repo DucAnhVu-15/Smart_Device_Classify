@@ -115,51 +115,112 @@ ba head độc lập dùng chung một encoder.
 ```
 Code/
 ├── pipeline/
-│   ├── 00_common.ipynb          định nghĩa dùng chung — mọi bước tự %run nó, không chạy riêng
-│   ├── run_all.ipynb            chạy các bước theo thứ tự, dừng ở bước lỗi
 │   ├── predata/                 1. dựng dữ liệu
 │   │   ├── 01_extract_cic.ipynb           pcap CIC-2022 → Data/features/*_all.csv
 │   │   ├── 02_extract_capture.ipynb       pcap tự thu → Data/features/*_capture.csv
+│   │   ├── 02b_extract_capture_by_ip.ipynb pcap gắn thiết bị theo IP → Data/features/test_pcap_collection/
 │   │   ├── 03_build_dataset.ipynb         *_all.csv → Data/sessions_verified.parquet
 │   │   └── 04_add_capture_devices.ipynb   gộp thiết bị FIELD → sessions(_verified).parquet
-│   ├── train_model/             2. train và đo
-│   │   ├── 05_train_closedset.ipynb       → Models/<ts>_field_closedset/   (production)
-│   │   ├── 05b_train_os_head.ipynb        → Models/<ts>_os/  head OS + cascade (thử nghiệm, chưa vào ONNX)
-│   │   ├── 06_train_openset.ipynb         → Models/<run_id>/  tiered       (đánh giá)
-│   │   ├── 07_evaluate_openset.ipynb      time split, thiết bị/lớp chưa thấy
-│   │   └── 08_test_openset.ipynb          IoT Sentinel, CIC, FIELD
+│   ├── train_model/             2. train — MỘT file
+│   │   └── 05_train.ipynb                 → Models/<ts>/train/  iden.joblib (make/type/model) + os.joblib (head OS)
 │   └── out_model/               3. đóng gói model
-│       ├── 09_build_sdc_iden.ipynb        → Models/<ts>_iden/sdc_iden.onnx  (BẢN DEPLOY)
-│       ├── 10_activate_openset.ipynb      ghi Models/current_model.json (cờ tắt mặc định)
-│       ├── 11_export_onnx_openset.ipynb   → sdc_multihead.onnx
-│       ├── 12_export_tflite_os.ipynb      Models/<ts>_os/ → tflite/sdc_os_forest.tflite (contract nhúng ở metadata `sdc.contract`)
-│       ├── 13_export_tflite_iden.ipynb    sdc_iden.onnx + head OS (05b) → <ts>_os/tflite_iden_os/sdc_iden_os.tflite (12 chuỗi → make/type/model, cần Flex)
-│       └── 14_build_sdc_iden_os_onnx.ipynb sdc_iden.onnx + head OS (05b) → <ts>_os/onnx_iden_os/sdc_iden_os.onnx (cùng mô hình với 13, chạy onnxruntime)
+│       ├── 09_build_sdc_iden.ipynb        iden.joblib → Models/<ts>/iden/sdc_iden.onnx
+│       ├── 12_build_release_onnx.ipynb    sdc_iden.onnx + os.joblib → Models/<ts>/release/sdc_os.onnx  (BẢN DEPLOY)
+│       └── 13_export_release_tflite.ipynb release → cùng thư mục: sdc_os.tflite (cần TensorFlow; chạy cần Flex)
 ├── router/hostname_sources.py   đặc tả nguồn hostname cho agent trên router (stdlib, chưa nối vào pipeline)
-└── archive/                     notebook cũ, không thuộc pipeline — xem archive/README.md
+└── archive/                     notebook cũ (gồm nhánh open-set 06/07/08/10/11) — xem archive/README.md
 ```
 
-Chạy theo số thứ tự, hoặc mở `pipeline/run_all.ipynb`, bật/tắt từng bước trong `STEPS` rồi Run All.
+Mở từng notebook theo số thứ tự rồi Run All. Không có notebook thư viện chung: mỗi notebook tự chứa đủ code nó cần (mục **Thư viện** ở đầu notebook).
 
-- **Bản deploy** chỉ cần `01 → 05 → 09` (thêm `02`–`04` khi có pcap tự thu mới).
-- **Nhánh open-set** `06 → 07 → 08 → 10 → 11` dùng để đánh giá, không cần cho bản deploy.
+### Khâu model: một chuỗi thẳng
+
+Một lần chạy pipeline = một thư mục `Models/<ts>/` (05 tạo), các bước sau ghi vào thư mục con của nó:
+
+```
+05  train ─► <ts>/train/  iden.joblib + os.joblib + meta.json
+09  đóng gói iden ─► <ts>/iden/sdc_iden.onnx              (contract ghi source_run = <ts>)
+12  ghép iden + OS ─► <ts>/release/  sdc_os.onnx, sdc_os_contract.json, manifest.json
+13  xuất TFLite    ─► cùng <ts>/release/  sdc_os.tflite, sdc_os_tflite_contract.json, parity_inputs.npz
+```
+
+- **Train ở đúng một chỗ:** `05_train.ipynb` — phần A head iden, phần B head OS, cùng ghi vào một run.
+- **12 không chọn head OS riêng:** nó lấy `train/os.joblib` của cùng run và kiểm `source_run` của `sdc_iden.onnx`
+  trỏ đúng run đó, nên không thể ghép iden của lần train này với OS của lần train khác.
+- **Bản deploy = `release/` của run mới nhất.** Chạy lại 09 hoặc 12 trên cùng run thì ghi đè bước đó của run
+  (12 xoá cả `release/` cũ, kể cả TFLite); muốn giữ bản cũ thì chạy 05 để có run mới.
+  `manifest.json` ghi run nguồn, sha256 và kết quả kiểm của từng file; 13 thêm `sdc_os.tflite` vào đó.
+- Thư mục dạng cũ `<ts>_train/`, `<ts>_iden/`, `<ts>_release/` trong `Models/` không còn được chọn tự động.
+- **`sdc_os.onnx` và `sdc_os.tflite` là cùng một model:** 13 kiểm từng nhãn TFLite khớp `sdc_os.onnx`.
+
+### Chạy riêng một notebook
+
+Mỗi notebook tự chứa đủ code (mục **Thư viện** ở đầu), đọc input từ đĩa và ghi output ra đĩa. Mở notebook nào rồi
+Run All cũng được, miễn input ở cột 2 đã có. Ngoại lệ duy nhất là `04`: nó tự `%run` lại `02` để lấy bản ghi
+pcap trong bộ nhớ.
+
+Run đầu vào chọn bằng biến `RUN` ở đầu notebook 09, 12, 13: tên thư mục `Models/<ts>/`, hoặc `None` = run mới
+nhất đã có đầu ra của bước trước (hàm `pick_run`). Đặt cùng một giá trị `RUN` ở cả ba notebook để làm việc trên
+một run cụ thể.
+
+| Notebook | Cần có sẵn | Ghi ra | Chọn run |
+|---|---|---|---|
+| `01` | pcap CIC-2022 `Data/1-Power`, `Data/2-Idle` (chỉ server) | `Data/features/*_all.csv` | — |
+| `02` | pcap tự thu trong `CAPTURE_DIR`, `sessions_verified.parquet` | `Data/features/*_capture.csv` | — |
+| `02b` | `CAPTURE_DIR/test_pcap_collection.pcap`, `device_labels_capture.csv` | `Data/features/test_pcap_collection/` | — |
+| `03` | `Data/features/*_all.csv`, bảng nhãn | `Data/sessions_verified.parquet` | — |
+| `04` | pcap tự thu (chạy lại `02`), `Data/sessions.parquet` | `sessions.parquet`, `sessions_verified.parquet` | — |
+| `05` | `sessions_verified.parquet`; đánh giá cần `test_model/data_test/out/windows.jsonl` | run mới `Models/<ts>/train/` | — |
+| `09` | `<ts>/train/`, `sessions_verified.parquet`, `*_capture.csv` | `<ts>/iden/sdc_iden.onnx` + báo cáo | `RUN` |
+| `12` | `<ts>/iden/` + `<ts>/train/`; mục 5 cần `sessions_verified.parquet`, `*_capture.csv` | `<ts>/release/` | `RUN` |
+| `13` | `<ts>/release/` + `iden/`, `train/` cùng run | thêm `sdc_os.tflite` vào `<ts>/release/` | `RUN` |
+
+### Muốn sửa gì thì sửa ở đâu
+
+| Muốn đổi | Sửa ở | Chạy lại |
+|---|---|---|
+| Cách train head iden (FIX 1/2, tập train) | `05_train` phần A | `05` → `09` → `12` → `13` |
+| Feature, nhãn OS hay cách train head OS | `05_train` phần B (`FIELD_OS`, `os_feature_cols`, `fit_os`) | `05` → `09` → `12` → `13` |
+| Luật L0 của head iden (hostname, mDNS `model=`) | `09`, `DEFAULT_HOSTNAME_RULES` / `DEFAULT_MDNS_MODEL_MAP` | `09` → `12` → `13` |
+| Ngưỡng abstain của head iden | `09`, `DEFAULT_THRESHOLDS` (hoặc input `thresholds` lúc chạy) | `09` → `12` → `13` |
+| Hàm trong mục **Thư viện** (trích xuất pcap, encoder, contract 12 cột, luật OS, `cascade`…) | **mọi** notebook có bản sao — bảng dưới | các bước từ notebook sớm nhất bị sửa |
+
+### Hàm có bản sao ở đâu
+
+Mục **Thư viện** ở đầu mỗi notebook là bản chép **nguyên văn** của cùng một code; mỗi notebook chỉ chứa phần nó
+dùng. Sửa một hàm ở đây thì sửa y hệt ở mọi notebook trong cột 3, nếu không các bước sẽ lệch nhau (ví dụ luật OS
+ở `05` khác `12` → model train một kiểu, file deploy chạy một kiểu).
+
+| Nhóm (dòng đầu cell Thư viện) | Hàm chính | Có bản sao ở |
+|---|---|---|
+| Đường dẫn dự án, `ROOT`, lược đồ dữ liệu | `load_sessions`, `feature_sets`, `normalize_heads`, `assert_serveable` | 01, 02, 02b, 03, 04, 05, 09, 12, 13 |
+| Trích xuất feature từ pcap và bản ghi raw | `aggregate`, `extract_dhcp`, `extract_dns`, `TLSStreamReassembler`, `domain_tokens`… | 01, 02, 02b, 03, 04, 05, 12 |
+| Dựng dataset đã xác minh | `build_verified_dataset`, `validate_taxonomy` | 04 |
+| Bộ phân lớp L2 | `make_model` | 05, 09, 12 |
+| Bộ mã hoá feature (TF-IDF + ordinal) | `fit_encoder`, `apply_encoder`, `prepare_frame`… | 05, 09, 12, 13 |
+| Contract `sdc_iden` — input 12 cột | `INPUT_COLUMNS`, `add_l0_columns`, `derive_numeric`, `to_input_matrix`, `mac_oui`, `build_hierarchy`, `capture_frame`… | 05, 09, 12, 13 |
+| Head OS | `HOST_OS`, `l0_os`, `l1_os`, `os_decide`, `TYPE_OK`, `MAKE_OK`, `cascade` | 05, 12, 13 |
+| Khối dựng graph ONNX | `GB`, `relink`, `str_present`, `set_locale`… | 09, 12 |
+| Xuất rừng sang mảng phẳng và TFLite | `flatten_forest`, `rename_io`, `embed_metadata`, `read_metadata` | 12, 13 |
+
+- **Bản deploy** cần `01 → 05 → 09 → 12` (thêm `02`–`04` khi có pcap tự thu mới; `13` khi cần TFLite).
 - `01` cần pcap thô CIC-2022 (`Data/1-Power`, `Data/2-Idle`), chỉ có trên server.
-- Thư mục pcap tự thu là `CAPTURE_DIR` trong `00_common`: tự chọn `Data/data_pcap` (server) hoặc
+- Thư mục pcap tự thu là `CAPTURE_DIR` (mục Thư viện): tự chọn `Data/data_pcap` (server) hoặc
   `Data/data_pcap_capture` (máy local).
-- Sửa hàm trong `00_common` xong phải khởi động lại kernel của notebook đang mở.
+- ⚠️ **Đừng chạy `02` / `04` trên máy local.** Ở đây `Data/data_pcap_capture/` chỉ có `test_pcap_collection.pcap`; 6 file pcap FIELD chỉ có trên server. Chạy `02` ở local sẽ **ghi đè** `Data/features/*_capture.csv` (bộ test 62 cửa sổ) bằng dữ liệu khác, rồi `04`, `09`, `12` hỏng theo. Khâu model (`05` → `13`) chạy local bình thường.
 
 ⚠️ **Nguồn dữ liệu chưa khép kín.** `03` ghi `sessions_verified.parquet` từ `*_all.csv`, nhưng `04`
 dựng lại chính file đó từ `Data/sessions.parquet` — tức kết quả của `03` bị ghi đè. Phần CIC trong
 `sessions.parquet` hiện không bước nào sinh ra; nó là file có sẵn từ phiên bản cũ.
 
-`09_build_sdc_iden` gọi `latest_run("*_field_closedset")`; không có `05` thì nó dừng bằng AssertionError.
+`09_build_sdc_iden` lấy run `Models/<ts>/` mới nhất có `train/iden.joblib` (hoặc `RUN`); chưa có run nào của `05` thì nó dừng bằng AssertionError.
 
-**Môi trường:** cần `nbformat`, `nbclient` (cho `%run -i` file `.ipynb` và `run_all`), `scikit-learn`,
+**Môi trường:** cần `nbformat` (cho `04` `%run` notebook `02`), `scikit-learn`,
 `skl2onnx`, `onnx`, `onnxruntime`, `pandas`, `pyarrow`, `joblib`, `matplotlib`, `scapy`.
-Riêng `12`, `13` cần thêm `tensorflow` (Python 3.14: `pip install --pre tensorflow`); `12` nên có `ai-edge-litert`.
+Riêng `13` cần thêm `tensorflow` (Python 3.14: `pip install --pre tensorflow`).
 File của `13` dùng op Flex: `tensorflow` ≥ 2.20 (mọi OS) **không** chạy được nó vì đã bỏ Flex delegate khỏi
 `tf.lite.Interpreter` — notebook khi đó đối chiếu bằng graph TF và ghi `parity_inputs.npz`; kiểm file `.tflite`
-bằng `tensorflow==2.16.2` trên Linux (Python 3.12), bản này còn Flex.
+bằng `tensorflow==2.16.2` trên Linux (Python 3.12), bản này còn Flex (đoạn code mẫu ở mục 5 của 13).
 
 **Kiểm chứng bản dựng.** Contract nhúng trong ONNX mang hai hash; dựng lại đúng thì phải khớp:
 
