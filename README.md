@@ -4,8 +4,10 @@
 
 Xem [mô tả đầy đủ bản hostname cascade](docs/HOSTNAME_DATA_AKIEN_20261012.md): nguồn dữ liệu,
 kiến trúc A/B/C, chính sách chống ghi đè, cách chạy 05 → 09 → 12 → 13, kiểm tra và giới hạn.
-Bản này thêm hostname expert vào pipeline fingerprint hiện có; **chưa train hostname expert
-bằng tập hợp nhất Data_AKien và dữ liệu tự thu**. Data/model vẫn nằm ngoài repo.
+Bản ONNX `20261012_104055` trong tài liệu trên dùng expert Akien-only.
+Phần C của 05 hiện mặc định **train chung Data_AKien + hostname tự thu có nhãn verified**;
+xem [cách train hai nguồn và đọc audit](docs/HOSTNAME_COMBINED_TRAINING.md).
+Data/model vẫn nằm ngoài repo; cần train/export run mới để áp dụng thay đổi này.
 
 Các mục bên dưới mô tả pipeline nền; tài liệu bản hostname giải thích phần mở rộng.
 

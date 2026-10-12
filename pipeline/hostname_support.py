@@ -16,6 +16,9 @@ import numpy as np
 HEADS = ("make", "type", "model")
 UNKNOWN = "__unknown__"
 NULLS = {"", "null", "none", "nan", "<missing>", "<na>", UNKNOWN}
+# Packet fingerprints cannot tell an Android tablet from a phone, so a hostname model
+# whose hierarchy type is Tablet may refine a packet Smartphone (never the reverse).
+TYPE_REFINE = {"Smartphone": ["Tablet"]}
 
 
 def run_onnx(session, outputs, feeds, batch_size=32):
@@ -181,6 +184,18 @@ def make_spec(bundle):
     return spec
 
 
+def implied_labels(labels, hierarchy):
+    """Make/type implied by each model label; type only when the model allows exactly one."""
+    implied = {"make": [], "type": []}
+    for name in labels["model"]:
+        rule = hierarchy.get(name, {}) if name != UNKNOWN else {}
+        make = rule.get("make")
+        types = [t for t in rule.get("types", []) if t in labels["type"]]
+        implied["make"].append(make if make in labels["make"] and make != UNKNOWN else UNKNOWN)
+        implied["type"].append(types[0] if len(types) == 1 and types[0] != UNKNOWN else UNKNOWN)
+    return implied
+
+
 def hostname_contract(run_dir, bundle, base_labels, resolved, hierarchy):
     labels = expanded_labels(base_labels, bundle)
     merged = dict(hierarchy)
@@ -198,14 +213,28 @@ def hostname_contract(run_dir, bundle, base_labels, resolved, hierarchy):
                 for v in allowed + [UNKNOWN]:
                     mask[i, labels[h].index(v)] = 1
         masks[h] = mask
+    # A packet type that a model may refine (Smartphone -> Tablet) is not a conflict.
+    guard = masks["type"].copy()
+    for coarse, fine in TYPE_REFINE.items():
+        if coarse in labels["type"]:
+            cols = [labels["type"].index(t) for t in fine if t in labels["type"]]
+            if cols:
+                guard[:, labels["type"].index(coarse)] = np.maximum(
+                    guard[:, labels["type"].index(coarse)], masks["type"][:, cols].max(axis=1))
+    masks["type_guard"] = guard
     path = Path(run_dir) / "train/hostname_cascade.joblib"
-    return {"format": "sdc-hostname-graph-v2", "file": "train/hostname_cascade.joblib",
+    return {"format": "sdc-hostname-graph-v3", "file": "train/hostname_cascade.joblib",
             "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
             "base_labels": base_labels, "labels": labels,
             "rules": [list(r) for r in bundle["rules"]],
             "thresholds": {h: float(bundle["experts"][h]["threshold"]) for h in HEADS},
-            "priority": "mDNS/OUI > hostname rule A > answered packet head > expert B; hierarchy; OS cascade",
+            "priority": "mDNS/OUI > hostname rule A > answered packet head > expert B; "
+                        "hostname model implies make/type; hierarchy; OS cascade",
             "preserve_packet_answers": True, "guard_model_type": True,
+            "guard_model_make": True, "model_implies": True,
+            "type_refine": {k: [t for t in v if t in labels["type"]]
+                            for k, v in TYPE_REFINE.items() if k in labels["type"]},
+            "implied": implied_labels(labels, merged),
             "expert_make_evidence": make_evidence_patterns(bundle),
             "input_normalization": "dhcp_hostname: NFKC + strip + lowercase + collapse whitespace",
             "experimental": True, "gate": bundle.get("provenance", {}).get("test_gate", {}),
@@ -216,17 +245,26 @@ def hostname_contract(run_dir, bundle, base_labels, resolved, hierarchy):
 def merge_reference(base, host, matrix, cols, contract):
     result = np.array(base, dtype=object, copy=True)
     host = np.array(host, dtype=object, copy=True)
-    hits = {h: rule_hits(matrix[:, cols.index("dhcp_hostname")], contract["rules"], h)
-            for h in HEADS} if contract.get("preserve_packet_answers") else {}
+    hits = {h: rule_hits(matrix[:, cols.index("dhcp_hostname")], contract.get("rules", []), h)
+            for h in HEADS}
     labels = contract["labels"]
+    masks = contract["masks"]
+    index = lambda values, h: np.array([labels[h].index(v) for v in values])
     if contract.get("guard_model_type"):
-        model_index = np.array([labels["model"].index(v) for v in host[:, 2]])
-        type_index = np.array([labels["type"].index(v) for v in result[:, 1]])
-        allowed = np.asarray(contract["masks"]["type"])[model_index, type_index] > 0
+        type_mask = np.asarray(masks.get("type_guard", masks["type"]))
+        allowed = type_mask[index(host[:, 2], "model"), index(result[:, 1], "type")] > 0
         conflict = ~allowed & (result[:, 1] != UNKNOWN) & ~hits["model"]
         host[conflict, 2] = UNKNOWN
+    if contract.get("guard_model_make"):
+        # An expert model must agree with every make already known (packet or hostname).
+        model_index = index(host[:, 2], "model")
+        allowed = np.ones(len(host), dtype=bool)
+        for values in (result[:, 0], host[:, 0]):
+            allowed &= np.asarray(masks["make"])[model_index, index(values, "make")] > 0
+        host[~allowed & ~hits["model"], 2] = UNKNOWN
     strong_mdns = np.isin(matrix[:, cols.index("mdns_model")], contract["strong_mdns"])
     strong_oui = np.isin(matrix[:, cols.index("mac_oui")], contract["strong_oui"])
+    taken = {}
     for j, h in enumerate(HEADS):
         strong = strong_mdns | (strong_oui if h == "make" else False)
         if contract.get("preserve_packet_answers"):
@@ -234,6 +272,18 @@ def merge_reference(base, host, matrix, cols, contract):
         keep_base = strong & (result[:, j] != UNKNOWN)
         take = (host[:, j] != UNKNOWN) & ~keep_base
         result[take, j] = host[take, j]
+        taken[h] = take
+    if contract.get("model_implies"):
+        # Only a model taken from the hostname fills in; packet-only rows stay unchanged.
+        model_index = index(result[:, 2], "model")
+        make = np.asarray(contract["implied"]["make"], dtype=object)[model_index]
+        fill = taken["model"] & (result[:, 0] == UNKNOWN) & (make != UNKNOWN)
+        result[fill, 0] = make[fill]
+        kind = np.asarray(contract["implied"]["type"], dtype=object)[model_index]
+        refine = contract.get("type_refine", {})
+        refinable = np.array([k in refine.get(t, []) for t, k in zip(result[:, 1], kind)], dtype=bool)
+        fill = taken["model"] & (kind != UNKNOWN) & ((result[:, 1] == UNKNOWN) | refinable)
+        result[fill, 1] = kind[fill]
     driver = np.array([labels["model"].index(v) for v in result[:, 2]])
     for j, h in enumerate(("make", "type")):
         idx = np.array([labels[h].index(v) for v in result[:, j]])
@@ -324,19 +374,31 @@ def attach_hostname(model, bundle, cols, contract, GB):
     oui = gb.add("Gather", ["input", const(np.int64([cols.index("mac_oui")]), "oui_col")], "oui", axis=1)
     mdns_hit = member(mdns, contract["strong_mdns"], "strong_mdns")
     oui_hit = member(oui, contract["strong_oui"], "strong_oui")
-    merged = []
+    merged, taken = [], []
     unknown = const([[UNKNOWN]], "unknown", TP.STRING)
+    def model_index(x, stem):
+        idx = lookup(x, {v: i for i, v in enumerate(contract["labels"]["model"])}, stem, default=0)
+        return gb.add("Reshape", [idx, const(np.int64([-1]), stem + "_shape")], stem + "_flat")
+    def mask_allowed(mask, rows, values, head, stem):
+        row = gb.add("Gather", [const(np.float32(mask), stem + "_mask"), rows], stem + "_row", axis=0)
+        idx = lookup(values, {v: i for i, v in enumerate(contract["labels"][head])}, stem + "_idx", default=0)
+        allowed = gb.add("GatherElements", [row, idx], stem + "_allowed", axis=1)
+        return gb.add("Greater", [allowed, const(np.float32(0), stem + "_zero")], stem + "_ok")
+    model_no_rule = gb.add("Not", [rule_masks[2]], "model_no_rule")
     if contract.get("guard_model_type"):
-        candidate_idx = lookup(host_cols[2], {v: i for i, v in enumerate(contract["labels"]["model"])}, "model_candidate_idx", default=0)
-        candidate_idx = gb.add("Reshape", [candidate_idx, const(np.int64([-1]), "model_candidate_shape")], "model_candidate_flat")
-        type_idx = lookup(base_cols[1], {v: i for i, v in enumerate(contract["labels"]["type"])}, "packet_type_idx", default=0)
-        row = gb.add("Gather", [const(np.float32(contract["masks"]["type"]), "candidate_type_mask"), candidate_idx], "candidate_type_row", axis=0)
-        allowed = gb.add("GatherElements", [row, type_idx], "candidate_type_allowed", axis=1)
-        conflict = gb.add("LessOrEqual", [allowed, const(np.float32(0), "candidate_zero")], "candidate_type_conflict")
+        masks = contract["masks"]
+        allowed = mask_allowed(masks.get("type_guard", masks["type"]), model_index(host_cols[2], "model_candidate_idx"),
+                               base_cols[1], "type", "candidate_type")
         known_type = gb.add("Not", [gb.add("Equal", [base_cols[1], unknown], "packet_type_unknown")], "packet_type_known")
-        conflict = gb.add("And", [conflict, known_type], "known_type_conflict")
-        conflict = gb.add("And", [conflict, gb.add("Not", [rule_masks[2]], "model_no_rule")], "expert_model_conflict")
+        conflict = gb.add("And", [gb.add("Not", [allowed], "candidate_type_conflict"), known_type], "known_type_conflict")
+        conflict = gb.add("And", [conflict, model_no_rule], "expert_model_conflict")
         host_cols[2] = gb.add("Where", [conflict, unknown, host_cols[2]], "safe_expert_model")
+    if contract.get("guard_model_make"):
+        rows = model_index(host_cols[2], "model_make_idx")
+        allowed = gb.add("And", [mask_allowed(contract["masks"]["make"], rows, base_cols[0], "make", "packet_make"),
+                                 mask_allowed(contract["masks"]["make"], rows, host_cols[0], "make", "host_make")], "model_make_ok")
+        conflict = gb.add("And", [gb.add("Not", [allowed], "model_make_conflict"), model_no_rule], "expert_make_conflict")
+        host_cols[2] = gb.add("Where", [conflict, unknown, host_cols[2]], "make_safe_expert_model")
     for j, h in enumerate(HEADS):
         strong = gb.add("Or", [mdns_hit, oui_hit], "strong_make") if h == "make" else mdns_hit
         if contract.get("preserve_packet_answers"):
@@ -344,6 +406,24 @@ def attach_hostname(model, bundle, cols, contract, GB):
         keep = gb.add("And", [strong, gb.add("Not", [gb.add("Equal", [base_cols[j], unknown], "base_unknown_" + h)], "base_known_" + h)], "keep_" + h)
         take = gb.add("And", [gb.add("Not", [gb.add("Equal", [host_cols[j], unknown], "host_unknown_" + h)], "host_known_" + h), gb.add("Not", [keep], "notkeep_" + h)], "take_" + h)
         merged.append(gb.add("Where", [take, host_cols[j], base_cols[j]], "merged_" + h))
+        taken.append(take)
+    if contract.get("model_implies"):
+        # Gather [M] by [N,1] indexes keeps the [N,1] column shape.
+        idx = lookup(merged[2], {v: i for i, v in enumerate(contract["labels"]["model"])}, "implied_idx", default=0)
+        make = gb.add("Gather", [const(np.asarray(contract["implied"]["make"], dtype=object), "implied_make_table", TP.STRING), idx], "implied_make", axis=0)
+        kind = gb.add("Gather", [const(np.asarray(contract["implied"]["type"], dtype=object), "implied_type_table", TP.STRING), idx], "implied_type", axis=0)
+        make_known = gb.add("Not", [gb.add("Equal", [make, unknown], "implied_make_unknown")], "implied_make_known")
+        fill = gb.add("And", [taken[2], gb.add("And", [gb.add("Equal", [merged[0], unknown], "fill_make_unknown"), make_known], "fill_make_ok")], "fill_make")
+        merged[0] = gb.add("Where", [fill, make, merged[0]], "implied_merged_make")
+        refinable = gb.add("Equal", [merged[1], unknown], "fill_type_unknown")
+        for coarse, fine in contract.get("type_refine", {}).items():
+            for target in fine:
+                pair = gb.add("And", [gb.add("Equal", [merged[1], const([[coarse]], "refine_from", TP.STRING)], "refine_from_hit"),
+                                      gb.add("Equal", [kind, const([[target]], "refine_to", TP.STRING)], "refine_to_hit")], "refine_pair")
+                refinable = gb.add("Or", [refinable, pair], "refinable")
+        kind_known = gb.add("Not", [gb.add("Equal", [kind, unknown], "implied_type_unknown")], "implied_type_known")
+        fill = gb.add("And", [taken[2], gb.add("And", [kind_known, refinable], "fill_type_ok")], "fill_type")
+        merged[1] = gb.add("Where", [fill, kind, merged[1]], "implied_merged_type")
     driver = lookup(merged[2], {v: i for i, v in enumerate(contract["labels"]["model"])}, "driver", default=0)
     driver = gb.add("Reshape", [driver, const(np.int64([-1]), "drivershape")], "driverflat")
     for j, h in enumerate(("make", "type")):
@@ -453,22 +533,43 @@ def tf_hostname_module(tf, bundle, contract):
                     if head == h:
                         hit |= tf.strings.regex_full_match(hosts, pattern)
                 hits[h] = hit
+            masks = contract["masks"]
+            def allowed(mask, rows, values, head):
+                cells = tf.stack([rows, index(values, contract["labels"][head])], axis=1)
+                return tf.gather_nd(tf.constant(np.float32(mask)), cells) > 0
             if contract.get("guard_model_type"):
                 candidate_idx = index(host[:, 2], contract["labels"]["model"])
-                packet_type_idx = index(base[:, 1], contract["labels"]["type"])
-                mask = tf.constant(np.float32(contract["masks"]["type"]))
-                allowed = tf.gather_nd(mask, tf.stack([candidate_idx, packet_type_idx], axis=1)) > 0
-                conflict = ~allowed & tf.not_equal(base[:, 1], UNKNOWN) & ~hits["model"]
+                ok = allowed(masks.get("type_guard", masks["type"]), candidate_idx, base[:, 1], "type")
+                conflict = ~ok & tf.not_equal(base[:, 1], UNKNOWN) & ~hits["model"]
                 host = tf.stack([host[:, 0], host[:, 1], tf.where(conflict, UNKNOWN, host[:, 2])], axis=1)
+            if contract.get("guard_model_make"):
+                candidate_idx = index(host[:, 2], contract["labels"]["model"])
+                ok = (allowed(masks["make"], candidate_idx, base[:, 0], "make")
+                      & allowed(masks["make"], candidate_idx, host[:, 0], "make"))
+                host = tf.stack([host[:, 0], host[:, 1], tf.where(~ok & ~hits["model"], UNKNOWN, host[:, 2])], axis=1)
             mdns = tf.reduce_any(tf.equal(col["mdns_model"][:, None], tf.constant(contract["strong_mdns"], dtype=tf.string)), axis=1)
             oui = tf.reduce_any(tf.equal(col["mac_oui"][:, None], tf.constant(contract["strong_oui"], dtype=tf.string)), axis=1)
-            merged = []
+            merged, taken = [], []
             for j, h in enumerate(HEADS):
                 strong = mdns | (oui if h == "make" else False)
                 if contract.get("preserve_packet_answers"):
                     strong |= ~hits[h]
                 keep = strong & tf.not_equal(base[:, j], UNKNOWN)
-                merged.append(tf.where(tf.not_equal(host[:, j], UNKNOWN) & ~keep, host[:, j], base[:, j]))
+                take = tf.not_equal(host[:, j], UNKNOWN) & ~keep
+                merged.append(tf.where(take, host[:, j], base[:, j]))
+                taken.append(take)
+            if contract.get("model_implies"):
+                implied_idx = index(merged[2], contract["labels"]["model"])
+                make = tf.gather(tf.constant(contract["implied"]["make"]), implied_idx)
+                kind = tf.gather(tf.constant(contract["implied"]["type"]), implied_idx)
+                fill = taken[2] & tf.equal(merged[0], UNKNOWN) & tf.not_equal(make, UNKNOWN)
+                merged[0] = tf.where(fill, make, merged[0])
+                refinable = tf.equal(merged[1], UNKNOWN)
+                for coarse, fine in contract.get("type_refine", {}).items():
+                    for target in fine:
+                        refinable |= tf.equal(merged[1], coarse) & tf.equal(kind, target)
+                fill = taken[2] & tf.not_equal(kind, UNKNOWN) & refinable
+                merged[1] = tf.where(fill, kind, merged[1])
             driver = index(merged[2], contract["labels"]["model"])
             for j, h in enumerate(("make", "type")):
                 ix = index(merged[j], contract["labels"][h])

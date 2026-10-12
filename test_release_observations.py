@@ -24,7 +24,7 @@ from pipeline.hostname_support import normalize_hostname, run_onnx
 # ===== Sửa đường dẫn tại đây, sau đó chỉ cần: python test_release_observations.py =====
 ROOT = Path(r"D:\01.AI_Security\02.SDC")
 DATA_PATH = ROOT / "device_observations.jsonl"
-MODEL_PATH = ROOT / "Models" / "20261012_104055" / "release" / "sdc_os.onnx"
+MODEL_PATH = ROOT / "Models" / "20261012_142446" / "release" / "sdc_os.onnx"
 # Mỗi lần chạy tạo một thư mục mới: Reports\<YYYYmmdd_HHMMSS>\release_observations.csv
 REPORT_DIR = ROOT / "Reports"
 OUTPUT_PATH = REPORT_DIR / datetime.now().strftime("%Y%m%d_%H%M%S") / "release_observations.csv"

@@ -56,11 +56,24 @@ Nhánh hostname được ghép theo từng head, sau đó kiểm hierarchy và c
 5. Model B xung đột với type nền đã biết bị loại trước khi áp hierarchy,
    để không làm mất kết quả Laptop vì một dự đoán model điện thoại.
 6. Hierarchy loại các nhãn make/type xung đột với model theo bảng cho phép.
-   Chưa tự suy ngược hãng/type từ tên model.
 
-Chính sách mới được ghi trong contract `sdc-hostname-graph-v2`, cùng SHA-256 của bundle,
-nhãn mở rộng, thresholds, provenance/gate và trạng thái experimental.
-Contract cũ vẫn được hỗ trợ để kiểm parity theo chính sách của model cũ.
+Contract `sdc-hostname-graph-v3` (release `20261012_142446`, xem `releases/20261012_142446.md`) bổ sung:
+
+7. Packet `Smartphone` không còn coi là xung đột với model hostname có type `Tablet`
+   (`masks.type_guard`, `type_refine`): fingerprint không tách được tablet khỏi điện thoại.
+8. Model expert B xung đột với make đã biết (packet hoặc hostname) bị loại (`guard_model_make`),
+   ví dụ `samsung-galaxy-a34` không còn ghép make Samsung với model `OPPO A34`.
+9. Khi model lấy từ hostname, make/type còn trống được điền theo hierarchy của model
+   (`model_implies`, bảng `implied`); type chỉ điền khi model có đúng một type,
+   và `Smartphone` của packet được nâng lên `Tablet`. Dòng chỉ có packet không bị điền.
+
+Ở release (12/13), `TYPE_OK` của iOS/Android chấp nhận `Tablet`, và output gộp `Smartphone`
+và `Tablet` thành `Smartphone/Tablet` (`output_type_alias` trong contract release).
+`labels` trong contract vẫn là nhãn nội bộ chưa gộp.
+
+Mọi chính sách được ghi trong contract cùng SHA-256 của bundle, nhãn mở rộng, thresholds,
+provenance/gate và trạng thái experimental. Contract cũ vẫn được hỗ trợ để kiểm parity
+theo chính sách của model cũ.
 
 ## 4. Các file thay đổi
 
@@ -147,8 +160,9 @@ không phải nguyên nhân của lỗi đoán hãng đã sửa.
 
 - Luật legacy `desktop-* → Laptop` vẫn tồn tại; không coi đây là luật chắc chắn đúng
   và cần rà lại taxonomy trước khi sửa nhãn Desktop/Laptop.
-- Ba head hostname còn độc lập: `a34-cua-nga` có thể abstain hãng vì thiếu bằng chứng
-  nhưng vẫn trả model Samsung. Cần bổ sung kiểm nhất quán/bằng chứng cho model cụ thể.
+- Từ v3, model hostname điền hãng qua hierarchy (`a34-cua-nga` → Samsung). Head model
+  vẫn chưa đạt gate (novel false answers), nên một model sai ở ngưỡng 0,3 giờ kéo theo
+  cả make/type sai. Cần benchmark có nhãn trước khi coi đây là cải thiện.
 - Chưa hợp nhất hostname có nhãn từ data tự thu vào tập train Data_AKien.
 - Chưa thực hiện benchmark ba cấu hình: fingerprint nền, expert Akien-only,
   expert train hợp nhất, trên cùng tập thiết bị chưa dùng train.
