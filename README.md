@@ -1,5 +1,14 @@
 # Smart Device Classification (SDC)
 
+## Bản hostname Data_AKien — 12/10/2026
+
+Xem [mô tả đầy đủ bản hostname cascade](docs/HOSTNAME_DATA_AKIEN_20261012.md): nguồn dữ liệu,
+kiến trúc A/B/C, chính sách chống ghi đè, cách chạy 05 → 09 → 12 → 13, kiểm tra và giới hạn.
+Bản này thêm hostname expert vào pipeline fingerprint hiện có; **chưa train hostname expert
+bằng tập hợp nhất Data_AKien và dữ liệu tự thu**. Data/model vẫn nằm ngoài repo.
+
+Các mục bên dưới mô tả pipeline nền; tài liệu bản hostname giải thích phần mở rộng.
+
 Nhận dạng thiết bị trong mạng LAN từ traffic thụ động: DHCP, DNS, mDNS và TLS ClientHello.
 Đầu ra là ba nhãn — `make` (hãng), `type` (loại thiết bị), `model` (dòng sản phẩm) — đóng gói
 thành **một file ONNX duy nhất** chạy được trên router.

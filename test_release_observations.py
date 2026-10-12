@@ -12,11 +12,23 @@ import csv
 import json
 import re
 from collections import Counter
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
 import onnxruntime as ort
 
+from pipeline.hostname_support import normalize_hostname, run_onnx
+
+
+# ===== Sửa đường dẫn tại đây, sau đó chỉ cần: python test_release_observations.py =====
+ROOT = Path(r"D:\01.AI_Security\02.SDC")
+DATA_PATH = ROOT / "device_observations.jsonl"
+MODEL_PATH = ROOT / "Models" / "20261012_104055" / "release" / "sdc_os.onnx"
+# Mỗi lần chạy tạo một thư mục mới: Reports\<YYYYmmdd_HHMMSS>\release_observations.csv
+REPORT_DIR = ROOT / "Reports"
+OUTPUT_PATH = REPORT_DIR / datetime.now().strftime("%Y%m%d_%H%M%S") / "release_observations.csv"
+# ======================================================================================
 
 MISSING = "<missing>"
 TOKEN_SPLIT = re.compile(r"[.\-]")
@@ -133,17 +145,20 @@ def feature_row(observation):
             name for record in tls for name in record.get("server_names", [])
         ),
         "mac_oui": mac_oui(observation.get("mac")),
-        "dhcp_hostname": host,
+        "dhcp_hostname": normalize_hostname(host) or MISSING,
         "mdns_model": mdns_model(mdns),
     }
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("data", type=Path)
-    parser.add_argument("release", type=Path)
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--data", type=Path, default=DATA_PATH)
+    parser.add_argument("--model", type=Path, default=MODEL_PATH)
+    parser.add_argument("--output", type=Path, default=OUTPUT_PATH)
     args = parser.parse_args()
+    print(f"Data:   {args.data}")
+    print(f"Model:  {args.model}")
+    print(f"Output: {args.output}")
 
     observations = [
         json.loads(line)
@@ -161,8 +176,8 @@ def main():
             paired.append([current[column] for column in COLUMNS])
             metadata.append((index, case, observation, current))
 
-    session = ort.InferenceSession(str(args.release / "sdc_os.onnx"))
-    predictions = session.run(["output"], {"input": np.asarray(paired, dtype=object)})[0]
+    session = ort.InferenceSession(str(args.model))
+    predictions = run_onnx(session, ["output"], {"input": np.asarray(paired, dtype=object)})[0]
 
     output_rows = []
     for (index, case, observation, row), prediction in zip(metadata, predictions):
