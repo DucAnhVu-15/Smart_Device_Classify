@@ -2,7 +2,7 @@
 
 The input JSONL contains one device/window per line.  This adapter converts the
 nested DHCP/DNS/mDNS/TLS observations to the release's 12-column contract and
-runs a paired hostname ablation (hostname present vs. ``<missing>``).
+runs the model once per observation.
 """
 
 from __future__ import annotations
@@ -23,8 +23,8 @@ from pipeline.hostname_support import normalize_hostname, run_onnx
 
 # ===== Sửa đường dẫn tại đây, sau đó chỉ cần: python test_release_observations.py =====
 ROOT = Path(r"D:\01.AI_Security\02.SDC")
-DATA_PATH = ROOT / "device_observations.jsonl"
-MODEL_PATH = ROOT / "Models" / "20261012_142446_mdns_oui" / "release" / "sdc_os.onnx"
+DATA_PATH = ROOT / "server" /"data"/"device_observations.jsonl"
+MODEL_PATH = ROOT / "Models" / "20261013_094051" / "release" / "sdc_os.onnx"
 # Mỗi lần chạy tạo một thư mục mới: Reports\<YYYYmmdd_HHMMSS>\release_observations.csv
 REPORT_DIR = ROOT / "Reports"
 OUTPUT_PATH = REPORT_DIR / datetime.now().strftime("%Y%m%d_%H%M%S") / "release_observations.csv"
@@ -176,27 +176,18 @@ def main():
         if line.strip()
     ]
     features = [feature_row(observation) for observation in observations]
-    paired = []
-    metadata = []
-    for index, (observation, row) in enumerate(zip(observations, features)):
-        for case in ("with_hostname", "without_hostname"):
-            current = dict(row)
-            if case == "without_hostname":
-                current["dhcp_hostname"] = MISSING
-            paired.append([current[column] for column in COLUMNS])
-            metadata.append((index, case, observation, current))
+    matrix = [[row[column] for column in COLUMNS] for row in features]
 
     session = ort.InferenceSession(str(args.model))
-    predictions = run_onnx(session, ["output"], {"input": np.asarray(paired, dtype=object)})[0]
+    predictions = run_onnx(session, ["output"], {"input": np.asarray(matrix, dtype=object)})[0]
 
     output_rows = []
-    for (index, case, observation, row), prediction in zip(metadata, predictions):
+    for index, (observation, row, prediction) in enumerate(zip(observations, features, predictions)):
         output_rows.append(
             {
                 "observation": index,
                 "mac": observation.get("mac", ""),
                 "source_hostname": observation.get("hostname", ""),
-                "case": case,
                 **dict(zip(HEADS, prediction.astype(str))),
                 # Đủ 12 cột input model nhận (TLS, token DNS/mDNS/SNI, L0...), đúng thứ tự contract.
                 **{("input_dhcp_hostname" if c == "dhcp_hostname" else c): row[c] for c in COLUMNS},
