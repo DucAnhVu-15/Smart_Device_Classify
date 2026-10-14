@@ -10,8 +10,8 @@ env/
 
 # Data & models (khong push file nang len GitHub)
 *.csv
-# Catalog thiết bị cho rule hostname là mã nguồn, không phải data
-!pipeline/hostname_catalog.csv
+# Danh sách thiết bị cho rule hostname là mã nguồn, không phải data
+!pipeline/device_list.csv
 *.npy
 *.npz
 *.h5

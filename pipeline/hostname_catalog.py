@@ -1,16 +1,22 @@
-"""Rule A hostname từ catalog thiết bị đã duyệt (hostname_catalog.csv).
+"""Rule A hostname từ danh sách thiết bị (device_list.csv).
 
-Mỗi dòng catalog là một thiết bị theo cách người dùng gõ trong hostname ("s24 ultra",
-"reno 12 pro"). Regex sinh ra cần ranh giới ký tự hai đầu nên "s24" không khớp trong
-"s24ultra". Cascade lấy rule khớp ĐẦU TIÊN, nên một dòng phải đứng trước mọi dòng khác
-nhãn mà pattern cũng khớp hostname mẫu của nó (S24 Ultra trước S24, OPPO A18 trước A18).
+Mỗi dòng CSV là một thiết bị: make, type, model và hostname_names, tức các tên người dùng gõ
+trong hostname, cách nhau "|" ("s24 ultra|s24u"). Để trống hostname_names thì tên được tự
+sinh từ model (bỏ tên hãng, "Galaxy"). Tên bắt đầu "re:" là regex viết tay (máy in "brn...").
+Mỗi tên thành một rule riêng và được chấm riêng, nên tên trần sai nhiều ("a12" của cả Samsung
+lẫn OPPO) bị loại mà "galaxy a12" cùng dòng vẫn giữ.
+
+Regex sinh ra cần ranh giới ký tự hai đầu nên "s24" không khớp trong "s24ultra". Cascade lấy
+rule khớp ĐẦU TIÊN, nên script tự xếp tên dài trước tên ngắn khác nhãn mà khớp mẫu của nó
+(S24 Ultra trước S24, OPPO A18 trước A18).
 
 Nhãn "__unknown__" là rule chặn: hostname khớp thì head đó dừng ở A, không trả nhãn và
 không cho expert B đoán (camera "nomi-ipc-s21fe" không được thành Galaxy S21 FE); kết quả
 gói tin giữ nguyên vì cascade chỉ ghi đè khi hostname có nhãn.
 
 Mọi rule được đối chiếu nhãn thật train+validation của dataset hostname (05). Test chỉ để
-báo cáo, không dùng chọn rule. Chạy:
+báo cáo, không dùng chọn rule. Phần C của 05 gọi build() trực tiếp với HN_DEVICE_CATALOG;
+chạy tay chỉ để xem report trước khi train:
     python -X utf8 Code/pipeline/hostname_catalog.py --split Models/<RUN>/train/hostname_dataset_split.csv
 """
 import argparse
@@ -28,7 +34,10 @@ from hostname_support import HEADS, UNKNOWN, normalize_hostname
 
 FORMAT = "sdc-hostname-catalog-v1"
 SEP = r"[-_. ]?"
-COLUMNS = ("group", "make", "type", "model", "names", "prefixes", "require_prefix", "pattern", "examples")
+COLUMNS = ("make", "type", "model", "hostname_names")   # cột khác (vd source) chỉ để ghi chú
+# Tên tự sinh chỉ gồm các từ này thì quá chung ("ZTE Router" -> "router"), không thành rule.
+GENERIC_WORDS = {"router", "tablet", "pc", "ip", "camera", "tv", "smart", "phone", "laptop", "access",
+                 "point", "watch", "desktop", "mobile", "wifi", "box", "plug", "speaker", "series"}
 MIN_SCORED = 5
 MIN_PRECISION = 0.95
 MAX_UNION = 2000
@@ -80,28 +89,68 @@ def row_samples(row):
     return list(dict.fromkeys(out))
 
 
-def load_catalog(path):
+def derive_names(make, model):
+    """'Samsung Galaxy A15 5G' -> ['a15 5g', 'a15']; rỗng khi chỉ còn từ chung."""
+    words = re.findall(r"[a-z0-9]+", normalize_hostname(model.replace("+", " plus")))
+    brand = set(re.findall(r"[a-z0-9]+", normalize_hostname(make))) | {"galaxy"}
+    while words and words[0] in brand:
+        words = words[1:]
+    names = [words, words[:-1]] if len(words) > 1 and words[-1] in {"5g", "4g"} else [words]
+    return [" ".join(w) for w in names
+            if w and not set(w) <= GENERIC_WORDS and len("".join(w)) >= 3]
+
+
+def read_devices(path):
     with open(path, encoding="utf-8-sig", newline="") as handle:
         raw = list(csv.DictReader(handle))
     if not raw or set(COLUMNS) - set(raw[0]):
-        raise ValueError(f"Catalog cần cột {COLUMNS}: {path}")
-    rows = []
-    for line, item in enumerate(raw, start=2):
-        row = {k: (item[k] or "").strip() for k in COLUMNS}
-        row.update(line=line, names=split_list(row["names"]), prefixes=split_list(row["prefixes"]),
-                   examples=split_list(row["examples"]), require_prefix=row["require_prefix"] in {"1", "true", "True"})
-        if not (row["names"] or row["pattern"]) or not any(row[h] for h in HEADS):
-            raise ValueError(f"Dòng {line}: cần names/pattern và ít nhất một nhãn make/type/model")
-        if row["pattern"] and not row["examples"]:
-            raise ValueError(f"Dòng {line}: pattern tự viết cần examples")
-        row["regex"] = row_regex(row)
-        re.compile(row["regex"])
-        row["samples"] = row_samples(row)
-        bad = [s for s in row["samples"] if not re.fullmatch(row["regex"], s)]
-        if bad:
-            raise ValueError(f"Dòng {line} ({row['model'] or row['make']}): pattern không khớp mẫu {bad[:3]}")
-        rows.append(row)
-    return rows
+        raise ValueError(f"Danh sách thiết bị cần cột {COLUMNS}: {path}")
+    return [{k: (item[k] or "").strip() for k in COLUMNS} for item in raw]
+
+
+def load_catalog(path):
+    """Một rule (dòng nội bộ) cho mỗi tên; `line` = "<dòng CSV>:<tên>" để report trỏ về CSV."""
+    devices, explicit = [], {}
+    for line, device in enumerate(read_devices(path), start=2):
+        if not any(device[h] for h in HEADS):
+            raise ValueError(f"Dòng {line}: cần ít nhất một nhãn make/type/model")
+        # Regex có thể chứa "|", nên "re:" đứng cuối ô và lấy hết phần còn lại.
+        plain, _, regex = device["hostname_names"].partition("re:")
+        names = split_list(plain) + (["re:" + regex.strip()] if regex.strip() else [])
+        for name in names:
+            if not name.startswith("re:"):
+                explicit.setdefault(tuple(pieces(name)), set()).add(device["model"] or device["make"])
+        devices.append((line, device, names, not names))
+    owners = {key: set(labels) for key, labels in explicit.items()}
+    for _, device, _, auto in devices:
+        if auto:
+            for name in derive_names(device["make"], device["model"]):
+                owners.setdefault(tuple(pieces(name)), set()).add(device["model"] or device["make"])
+    rows, skipped = [], []
+    for line, device, names, auto in devices:
+        if auto:
+            label = device["model"] or device["make"]
+            # Tên tự sinh trùng tên của dòng khác nhãn thì bỏ: không biết máy nào đúng
+            # (AKien có 'Samsung A21' lẫn 'Samsung Galaxy A21').
+            names = [n for n in derive_names(device["make"], device["model"])
+                     if owners[tuple(pieces(n))] == {label}]
+        if not names:
+            skipped.append(line)
+        for name in names:
+            row = dict(device, line=f"{line}:{name}", group=device["type"], prefixes=[], require_prefix=False,
+                       examples=[], names=[], pattern="")
+            if name.startswith("re:"):
+                row["pattern"] = name[3:] if name[3:].startswith("(?i)") else "(?i)" + name[3:]
+            else:
+                row["names"] = [name]
+            row["regex"] = row_regex(row)
+            re.compile(row["regex"])
+            row["samples"] = row_samples(row)
+            bad = [s for s in row["samples"] if not re.fullmatch(row["regex"], s)]
+            if bad:
+                raise ValueError(f"Dòng {line} ({name}): pattern không khớp mẫu {bad[:3]}")
+            rows.append(row)
+    return rows, skipped
 
 
 def order_rows(rows, head):
@@ -116,9 +165,13 @@ def order_rows(rows, head):
     compiled = [re.compile(r["regex"]) for r in active]
     after = {i: set() for i in range(len(active))}
     blockers = {i: 0 for i in range(len(active))}
-    for i, a in enumerate(active):
-        for j, b in enumerate(active):
-            if i != j and a[head] != b[head] and any(compiled[j].fullmatch(s) for s in a["samples"]):
+    # Lọc trước: rule tên j chỉ có thể khớp mẫu của i khi mẫu chứa mảnh dài nhất của tên j.
+    joined = ["\n".join(r["samples"]) for r in active]
+    for j, b in enumerate(active):
+        anchor = max(pieces(b["names"][0]), key=len) if b["names"] else None
+        for i, a in enumerate(active):
+            if (i != j and a[head] != b[head] and (anchor is None or anchor in joined[i])
+                    and any(compiled[j].fullmatch(s) for s in a["samples"])):
                 after[i].add(j)
     for i in after:
         for j in after[i]:
@@ -138,7 +191,7 @@ def order_rows(rows, head):
                 heapq.heappush(ready, (key(j), j))
     if len(order) != len(active):
         stuck = [f"{active[i][head]} (dòng {active[i]['line']})" for i, n in blockers.items() if n]
-        raise ValueError(f"Rule {head} chồng lấn vòng tròn, cần sửa names: {stuck[:10]}")
+        raise ValueError(f"Tên hostname trùng giữa các thiết bị khác {head}, sửa hostname_names: {stuck[:10]}")
     return order
 
 
@@ -292,14 +345,21 @@ def label_hints(rows, frame):
             if row[head]:
                 same = known.get((head, label_key(row[head])), set()) - {row[head]}
                 if same:
-                    hints.append(f"dòng {row['line']} {head}={row[head]!r}; dataset viết {sorted(same)}")
-    return hints
+                    line = row["line"].split(":", 1)[0]
+                    hints.append(f"dòng {line} {head}={row[head]!r}; dataset viết {sorted(same)}")
+    return list(dict.fromkeys(hints))
 
 
-def build(catalog_path, split_path, default_notebook):
-    rows = load_catalog(catalog_path)
+def build(catalog_path, split, default_notebook):
+    """`split`: DataFrame (hostname, make, type, model, split) của 05, hoặc đường dẫn
+    hostname_dataset_split.csv của một run đã lưu."""
+    rows, skipped = load_catalog(catalog_path)
     defaults = read_default_rules(default_notebook)
-    frame = pd.read_csv(split_path, low_memory=False, keep_default_na=False, na_values=[""])
+    if isinstance(split, pd.DataFrame):
+        split_file, frame = "05 hn_split_manifest", split.copy()
+    else:
+        split_file = project_path(split)
+        frame = pd.read_csv(split, low_memory=False, keep_default_na=False, na_values=[""])
     frame = frame.loc[frame["hostname"].notna()].reset_index(drop=True)
     frame["hostname"] = frame["hostname"].map(normalize_hostname)
     frame.loc[frame["model"].isin(NOISY_MODEL), ["make", "model"]] = pd.NA
@@ -323,19 +383,21 @@ def build(catalog_path, split_path, default_notebook):
     else:
         raise RuntimeError("Loại rule không hội tụ sau 5 vòng")
     report = pd.concat([report, *dropped], ignore_index=True).sort_values(["head", "line"], kind="stable")
+    # Model -> make/type là sự thật của danh sách, giữ cả khi rule tên của model bị loại.
     hierarchy = {}
-    for row in rows:
-        if row["model"] not in ("", UNKNOWN) and (row["line"], "model") not in excluded:
-            entry = {"types": [row["type"]] if row["type"] else []}
-            if row["make"]:
-                entry["make"] = row["make"]
-            hierarchy[row["model"]] = entry
+    for device in read_devices(catalog_path):
+        if device["model"] not in ("", UNKNOWN):
+            entry = {"types": [device["type"]] if device["type"] else []}
+            if device["make"]:
+                entry["make"] = device["make"]
+            hierarchy[device["model"]] = entry
     return {"format": FORMAT,
             "catalog": project_path(catalog_path),
             "catalog_sha256": catalog_digest(catalog_path),
-            "evidence": {"split_file": project_path(split_path), "used_splits": ["train", "validation"],
+            "evidence": {"split_file": split_file, "used_splits": ["train", "validation"],
                          "min_scored": MIN_SCORED, "min_precision": MIN_PRECISION},
             "rules": build_rules(kept), "hierarchy": hierarchy,
+            "lines_without_rule": skipped,
             "label_hints": label_hints(rows, frame)}, report
 
 
@@ -352,20 +414,10 @@ def catalog_digest(path):
     return hashlib.sha256(Path(path).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
-def load_catalog_rules(path):
-    bundle = json.loads(Path(path).read_text(encoding="utf-8"))
-    if bundle.get("format") != FORMAT:
-        raise ValueError(f"Catalog rule format không hỗ trợ: {bundle.get('format')}")
-    for pattern, head, _ in bundle["rules"]:
-        assert head in HEADS
-        re.compile(pattern)
-    return bundle
-
-
 def main():
     root = ROOT
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--catalog", default=root / "Code/pipeline/hostname_catalog.csv", type=Path)
+    parser.add_argument("--catalog", default=root / "Code/pipeline/device_list.csv", type=Path)
     parser.add_argument("--split", required=True, type=Path, help="hostname_dataset_split.csv của run 05")
     parser.add_argument("--defaults", default=root / "Code/pipeline/out_model/09_build_sdc_iden.ipynb", type=Path)
     parser.add_argument("--out", default=root / "Code/pipeline/hostname_catalog_rules.json", type=Path)

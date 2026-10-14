@@ -1,0 +1,850 @@
+﻿make,type,model,hostname_names,source
+Allview,Smartphone,Allview P10 Life,,AKien
+Apple,Smartphone,iPhone,,AKien
+ASUS,Smartphone,ASUS ROG Phone 5,rog phone 5,device-list
+ASUS,Smartphone,ASUS ROG Phone 6,rog phone 6,device-list
+ASUS,Smartphone,ASUS ROG Phone 7,rog phone 7,device-list
+ASUS,Smartphone,ASUS ROG Phone 8,rog phone 8,device-list
+ASUS,Smartphone,ASUS ROG Phone 9,rog phone 9,device-list
+ASUS,Smartphone,ASUS Zenfone 10,zenfone 10,device-list
+ASUS,Smartphone,ASUS Zenfone 11 Ultra,zenfone 11 ultra,device-list
+ASUS,Smartphone,ASUS Zenfone 12 Ultra,zenfone 12 ultra,device-list
+ASUS,Smartphone,ASUS Zenfone 9,zenfone 9,device-list
+Blackberry,Smartphone,Blackberry,,AKien
+Blu,Smartphone,Blu Vivo One Plus,,AKien
+Google,Smartphone,Google Pixel,,AKien
+Google,Smartphone,Google Pixel 10,pixel 10,device-list
+Google,Smartphone,Google Pixel 10 Pro,pixel 10 pro,device-list
+Google,Smartphone,Google Pixel 10 Pro Fold,pixel 10 pro fold,device-list
+Google,Smartphone,Google Pixel 10 Pro XL,pixel 10 pro xl,device-list
+Google,Smartphone,Google Pixel 10a,pixel 10a,device-list
+Google,Smartphone,Google Pixel 11,pixel 11,device-list
+Google,Smartphone,Google Pixel 11 Pro,pixel 11 pro,device-list
+Google,Smartphone,Google Pixel 11 Pro XL,pixel 11 pro xl,device-list
+Google,Smartphone,Google Pixel 4a,pixel 4a,device-list
+Google,Smartphone,Google Pixel 5,pixel 5,device-list
+Google,Smartphone,Google Pixel 5a,pixel 5a,device-list
+Google,Smartphone,Google Pixel 6,pixel 6,device-list
+Google,Smartphone,Google Pixel 6 Pro,pixel 6 pro,device-list
+Google,Smartphone,Google Pixel 6a,pixel 6a,device-list
+Google,Smartphone,Google Pixel 7,pixel 7,device-list
+Google,Smartphone,Google Pixel 7 Pro,pixel 7 pro,device-list
+Google,Smartphone,Google Pixel 7a,pixel 7a,device-list
+Google,Smartphone,Google Pixel 8,pixel 8,device-list
+Google,Smartphone,Google Pixel 8 Pro,pixel 8 pro,device-list
+Google,Smartphone,Google Pixel 8a,pixel 8a,device-list
+Google,Smartphone,Google Pixel 9,pixel 9,device-list
+Google,Smartphone,Google Pixel 9 Pro,pixel 9 pro,device-list
+Google,Smartphone,Google Pixel 9 Pro Fold,pixel 9 pro fold,device-list
+Google,Smartphone,Google Pixel 9 Pro XL,pixel 9 pro xl,device-list
+Google,Smartphone,Google Pixel 9a,pixel 9a,device-list
+HMD,Smartphone,HMD Pulse,hmd pulse,device-list
+HMD,Smartphone,HMD Skyline,hmd skyline,device-list
+HONOR,Smartphone,Honor,,AKien
+HONOR,Smartphone,Honor 200,honor 200,device-list
+HONOR,Smartphone,Honor 400,honor 400,device-list
+HONOR,Smartphone,Honor 500,honor 500,device-list
+HONOR,Smartphone,Honor 70,honor 70,device-list
+HONOR,Smartphone,Honor 8X,,AKien
+HONOR,Smartphone,Honor 90,honor 90,device-list
+HONOR,Smartphone,Honor Magic V2,magic v2,device-list
+HONOR,Smartphone,Honor Magic V3,magic v3,device-list
+HONOR,Smartphone,Honor Magic V4,magic v4,device-list
+HONOR,Smartphone,Honor Magic Vs,magic vs,device-list
+HONOR,Smartphone,Honor Magic Vs3,magic vs3,device-list
+HONOR,Smartphone,Honor Magic4 Pro,magic 4 pro,device-list
+HONOR,Smartphone,Honor Magic5 Pro,magic 5 pro,device-list
+HONOR,Smartphone,Honor Magic6 Pro,magic 6 pro,device-list
+HONOR,Smartphone,Honor Magic7 Pro,magic 7 pro,device-list
+HONOR,Smartphone,Honor Play 40,honor play 40,device-list
+HONOR,Smartphone,Honor Play 50,honor play 50,device-list
+HONOR,Smartphone,Honor Play 60,honor play 60,device-list
+HONOR,Smartphone,Honor X6,honor x6,device-list
+HONOR,Smartphone,Honor X7,honor x7,device-list
+HONOR,Smartphone,Honor X8,honor x8,device-list
+HONOR,Smartphone,Honor X9a,honor x9a,device-list
+HONOR,Smartphone,Honor X9b,honor x9b,device-list
+HONOR,Smartphone,Honor X9c,honor x9c,device-list
+Huawei,Smartphone,Huawei Mate,,AKien
+Huawei,Smartphone,Huawei Mate 20,mate 20,AKien+device-list
+Huawei,Smartphone,Huawei Mate 20 Pro,mate 20 pro,AKien+device-list
+Huawei,Smartphone,Huawei Mate 30,mate 30,device-list
+Huawei,Smartphone,Huawei Mate 40 Pro,mate 40 pro,device-list
+Huawei,Smartphone,Huawei Mate 50 Pro,mate 50 pro,device-list
+Huawei,Smartphone,Huawei Mate 60 Pro,mate 60 pro,device-list
+Huawei,Smartphone,Huawei Mate 70 Pro,mate 70 pro,device-list
+Huawei,Smartphone,Huawei Mate 80 Pro,mate 80 pro,device-list
+Huawei,Smartphone,Huawei Mate X3,mate x3,device-list
+Huawei,Smartphone,Huawei Mate X5,mate x5,device-list
+Huawei,Smartphone,Huawei Mate X6,mate x6,device-list
+Huawei,Smartphone,Huawei Mate X7,mate x7,device-list
+Huawei,Smartphone,Huawei Mate XT,mate xt,device-list
+Huawei,Smartphone,Huawei Mate XTs,mate xts,device-list
+Huawei,Smartphone,Huawei Nova,,AKien
+Huawei,Smartphone,Huawei nova 10,huawei nova 10,device-list
+Huawei,Smartphone,Huawei nova 11,huawei nova 11,device-list
+Huawei,Smartphone,Huawei nova 12,huawei nova 12,device-list
+Huawei,Smartphone,Huawei nova 13,huawei nova 13,device-list
+Huawei,Smartphone,Huawei nova 14,huawei nova 14,device-list
+Huawei,Smartphone,Huawei nova 3i,,AKien
+Huawei,Smartphone,Huawei nova 5T,,AKien
+Huawei,Smartphone,Huawei Nova 7i,,AKien
+Huawei,Smartphone,Huawei nova 9,huawei nova 9,device-list
+Huawei,Smartphone,Huawei P20 Pro,,AKien
+Huawei,Smartphone,Huawei P30,huawei p30,AKien+device-list
+Huawei,Smartphone,Huawei P30 Lite,p30 lite,AKien+device-list
+Huawei,Smartphone,Huawei P30 Pro,huawei p30 pro,AKien+device-list
+Huawei,Smartphone,Huawei P40,huawei p40,device-list
+Huawei,Smartphone,Huawei P40 Pro,huawei p40 pro,AKien+device-list
+Huawei,Smartphone,Huawei P50,huawei p50,device-list
+Huawei,Smartphone,Huawei P50 Pro,huawei p50 pro,device-list
+Huawei,Smartphone,Huawei P60 Pro,huawei p60 pro,device-list
+Huawei,Smartphone,Huawei Pura 70,pura 70,device-list
+Huawei,Smartphone,Huawei Pura 70 Ultra,pura 70 ultra,device-list
+Huawei,Smartphone,Huawei Pura 80,pura 80,device-list
+Huawei,Smartphone,Huawei Pura 80 Ultra,pura 80 ultra,device-list
+Huawei,Smartphone,Huawei Y7 Pro (2019),,AKien
+Huawei,Smartphone,Huawei Y9 (2018),,AKien
+Huawei,Smartphone,Huawei Y9 Prime 2019,,AKien
+Huawei,Smartphone,Huawei Y9s,,AKien
+Infinix,Smartphone,Infinix GT 10 Pro,infinix gt10 pro,device-list
+Infinix,Smartphone,Infinix GT 20 Pro,infinix gt20 pro,device-list
+Infinix,Smartphone,Infinix Hot 30,infinix hot 30,device-list
+Infinix,Smartphone,Infinix Hot 40,infinix hot 40,device-list
+Infinix,Smartphone,Infinix Hot 50,infinix hot 50,device-list
+Infinix,Smartphone,Infinix Note 12,infinix note 12,device-list
+Infinix,Smartphone,Infinix Note 30,infinix note 30,device-list
+Infinix,Smartphone,Infinix Note 40,infinix note 40,device-list
+Infinix,Smartphone,Infinix Note 50,infinix note 50,device-list
+Infinix,Smartphone,Infinix Smart 8,infinix smart 8,device-list
+Infinix,Smartphone,Infinix Smart 9,infinix smart 9,device-list
+Infinix,Smartphone,Infinix Zero 30,infinix zero 30,device-list
+Infinix,Smartphone,Infinix Zero 40,infinix zero 40,device-list
+itel,Smartphone,itel A70,itel a70,device-list
+itel,Smartphone,itel A80,itel a80,device-list
+itel,Smartphone,itel P55,itel p55,device-list
+itel,Smartphone,itel S24,itel s24,device-list
+itel,Smartphone,itel Vision 3,itel vision 3,device-list
+LG,Smartphone,LG K3,,AKien
+LG,Smartphone,LG Optimus G E975,,AKien
+Masstel,Smartphone,Masstel Hapi 40,hapi 40,device-list
+Motorola,Smartphone,Motorola Edge 30,motorola edge 30|moto edge 30,device-list
+Motorola,Smartphone,Motorola Edge 30 Fusion,motorola edge 30 fusion|moto edge 30 fusion,device-list
+Motorola,Smartphone,Motorola Edge 30 Neo,motorola edge 30 neo|moto edge 30 neo,device-list
+Motorola,Smartphone,Motorola Edge 30 Pro,motorola edge 30 pro|moto edge 30 pro,device-list
+Motorola,Smartphone,Motorola Edge 40,motorola edge 40|moto edge 40,device-list
+Motorola,Smartphone,Motorola Edge 40 Fusion,motorola edge 40 fusion|moto edge 40 fusion,device-list
+Motorola,Smartphone,Motorola Edge 40 Neo,motorola edge 40 neo|moto edge 40 neo,device-list
+Motorola,Smartphone,Motorola Edge 40 Pro,motorola edge 40 pro|moto edge 40 pro,device-list
+Motorola,Smartphone,Motorola Edge 50,motorola edge 50|moto edge 50,device-list
+Motorola,Smartphone,Motorola Edge 50 Fusion,motorola edge 50 fusion|moto edge 50 fusion,device-list
+Motorola,Smartphone,Motorola Edge 50 Neo,motorola edge 50 neo|moto edge 50 neo,device-list
+Motorola,Smartphone,Motorola Edge 50 Pro,motorola edge 50 pro|moto edge 50 pro,device-list
+Motorola,Smartphone,Motorola Edge 60,motorola edge 60|moto edge 60,device-list
+Motorola,Smartphone,Motorola Edge 60 Fusion,motorola edge 60 fusion|moto edge 60 fusion,device-list
+Motorola,Smartphone,Motorola Edge 60 Neo,motorola edge 60 neo|moto edge 60 neo,device-list
+Motorola,Smartphone,Motorola Edge 60 Pro,motorola edge 60 pro|moto edge 60 pro,device-list
+Motorola,Smartphone,Motorola moto e13,motorola e13|moto e13,device-list
+Motorola,Smartphone,Motorola moto e14,motorola e14|moto e14,device-list
+Motorola,Smartphone,Motorola moto e15,motorola e15|moto e15,device-list
+Motorola,Smartphone,Motorola moto g54,motorola g54|moto g54,device-list
+Motorola,Smartphone,Motorola moto g64,motorola g64|moto g64,device-list
+Motorola,Smartphone,Motorola moto g84,motorola g84|moto g84,device-list
+Motorola,Smartphone,Motorola moto g85,motorola g85|moto g85,device-list
+Motorola,Smartphone,Motorola P30 Play,,AKien
+Motorola,Smartphone,Motorola razr 40,razr 40,device-list
+Motorola,Smartphone,Motorola razr 40 Ultra,razr 40 ultra,device-list
+Motorola,Smartphone,Motorola razr 50,razr 50,device-list
+Motorola,Smartphone,Motorola razr 50 Ultra,razr 50 ultra,device-list
+Motorola,Smartphone,Motorola razr 60,razr 60,device-list
+Motorola,Smartphone,Motorola razr 60 Ultra,razr 60 ultra,device-list
+Motorola,Smartphone,Motorola ThinkPhone,thinkphone,device-list
+Nokia,Smartphone,Nokia G22,nokia g22,device-list
+Nokia,Smartphone,Nokia G42,nokia g42,device-list
+Nokia,Smartphone,Nokia XR21,nokia xr21,device-list
+Nothing,Smartphone,Nothing CMF Phone 1,cmf phone 1,device-list
+Nothing,Smartphone,Nothing CMF Phone 2 Pro,cmf phone 2 pro,device-list
+Nothing,Smartphone,Nothing Phone (1),nothing phone 1,device-list
+Nothing,Smartphone,Nothing Phone (2),nothing phone 2,device-list
+Nothing,Smartphone,Nothing Phone (2a),nothing phone 2a,device-list
+Nothing,Smartphone,Nothing Phone (3),nothing phone 3,device-list
+Nothing,Smartphone,Nothing Phone (3a Pro),nothing phone 3a pro,device-list
+Nothing,Smartphone,Nothing Phone (3a),nothing phone 3a,device-list
+OnePlus,Smartphone,OnePlus 10 Pro,oneplus 10 pro|one plus 10 pro,device-list
+OnePlus,Smartphone,OnePlus 11,oneplus 11|one plus 11,device-list
+OnePlus,Smartphone,OnePlus 12,oneplus 12|one plus 12,device-list
+OnePlus,Smartphone,OnePlus 12R,oneplus 12r|one plus 12r,device-list
+OnePlus,Smartphone,OnePlus 13,oneplus 13|one plus 13,device-list
+OnePlus,Smartphone,OnePlus 13R,oneplus 13r|one plus 13r,device-list
+OnePlus,Smartphone,OnePlus 15,oneplus 15|one plus 15,device-list
+OnePlus,Smartphone,OnePlus 15R,oneplus 15r|one plus 15r,device-list
+OnePlus,Smartphone,OnePlus 7,oneplus 7|one plus 7,device-list
+OnePlus,Smartphone,OnePlus 7 Pro,oneplus 7 pro|one plus 7 pro,device-list
+OnePlus,Smartphone,OnePlus 8,oneplus 8|one plus 8,device-list
+OnePlus,Smartphone,OnePlus 8 Pro,oneplus 8 pro|one plus 8 pro,device-list
+OnePlus,Smartphone,OnePlus 9,oneplus 9|one plus 9,device-list
+OnePlus,Smartphone,OnePlus 9 Pro,oneplus 9 pro|one plus 9 pro,device-list
+OnePlus,Smartphone,OnePlus Nord 2,nord 2,device-list
+OnePlus,Smartphone,OnePlus Nord 3,nord 3,device-list
+OnePlus,Smartphone,OnePlus Nord 4,nord 4,device-list
+OnePlus,Smartphone,OnePlus Nord 5,nord 5,device-list
+OnePlus,Smartphone,OnePlus Nord CE 2,nord ce2,device-list
+OnePlus,Smartphone,OnePlus Nord CE 3,nord ce3,device-list
+OnePlus,Smartphone,OnePlus Nord CE 4,nord ce4,device-list
+OnePlus,Smartphone,OnePlus Nord CE 5,nord ce5,device-list
+OnePlus,Smartphone,OnePlus Nord N20,nord n20,device-list
+OnePlus,Smartphone,OnePlus Nord N30,nord n30,device-list
+OnePlus,Smartphone,OnePlus Open,oneplus open|one plus open,device-list
+OnePlus,Smartphone,OnePlus Open 2,oneplus open 2|one plus open 2,device-list
+OPPO,Smartphone,OPPO 1105,,AKien
+OPPO,Smartphone,OPPO A12,,AKien
+OPPO,Smartphone,OPPO A16,,AKien
+OPPO,Smartphone,OPPO A16k,,AKien
+OPPO,Smartphone,OPPO A17k,,AKien
+OPPO,Smartphone,OPPO A18,oppo a18,device-list
+OPPO,Smartphone,OPPO A3,oppo a3,device-list
+OPPO,Smartphone,OPPO A31,,AKien
+OPPO,Smartphone,OPPO A32,,AKien
+OPPO,Smartphone,OPPO A34,,AKien
+OPPO,Smartphone,OPPO A35,,AKien
+OPPO,Smartphone,OPPO A38,oppo a38,device-list
+OPPO,Smartphone,Oppo A3x,,AKien
+OPPO,Smartphone,OPPO A5 Pro,oppo a5 pro,device-list
+OPPO,Smartphone,OPPO A52,,AKien
+OPPO,Smartphone,OPPO A53,,AKien
+OPPO,Smartphone,OPPO A54,,AKien
+OPPO,Smartphone,OPPO A57,,AKien
+OPPO,Smartphone,OPPO A58,oppo a58,device-list
+OPPO,Smartphone,Oppo A60,,AKien
+OPPO,Smartphone,OPPO A71,,AKien
+OPPO,Smartphone,OPPO A72,,AKien
+OPPO,Smartphone,OPPO A73,,AKien
+OPPO,Smartphone,OPPO A74,,AKien
+OPPO,Smartphone,OPPO A77s,,AKien
+OPPO,Smartphone,OPPO A78,oppo a78,device-list
+OPPO,Smartphone,OPPO A79,oppo a79,device-list
+OPPO,Smartphone,OPPO A92,,AKien
+OPPO,Smartphone,OPPO A93,,AKien
+OPPO,Smartphone,OPPO Find N2,find n2,device-list
+OPPO,Smartphone,OPPO Find N2 Flip,find n2 flip,device-list
+OPPO,Smartphone,OPPO Find N3,find n3,device-list
+OPPO,Smartphone,OPPO Find N3 Flip,find n3 flip,device-list
+OPPO,Smartphone,OPPO Find N5,find n5,device-list
+OPPO,Smartphone,OPPO Find N5 Flip,find n5 flip,device-list
+OPPO,Smartphone,OPPO Find X2,find x2,device-list
+OPPO,Smartphone,OPPO Find X2 Pro,find x2 pro,device-list
+OPPO,Smartphone,OPPO Find X3,find x3,device-list
+OPPO,Smartphone,OPPO Find X3 Pro,find x3 pro,device-list
+OPPO,Smartphone,OPPO Find X5,find x5,device-list
+OPPO,Smartphone,OPPO Find X5 Pro,find x5 pro,device-list
+OPPO,Smartphone,OPPO Find X6,find x6,device-list
+OPPO,Smartphone,OPPO Find X6 Pro,find x6 pro,device-list
+OPPO,Smartphone,OPPO Find X6 Ultra,find x6 ultra,device-list
+OPPO,Smartphone,OPPO Find X7,find x7,device-list
+OPPO,Smartphone,OPPO Find X7 Pro,find x7 pro,device-list
+OPPO,Smartphone,OPPO Find X7 Ultra,find x7 ultra,device-list
+OPPO,Smartphone,OPPO Find X8,find x8,device-list
+OPPO,Smartphone,OPPO Find X8 Pro,find x8 pro,device-list
+OPPO,Smartphone,OPPO Find X8 Ultra,find x8 ultra,device-list
+OPPO,Smartphone,OPPO Find X9,find x9,device-list
+OPPO,Smartphone,OPPO Find X9 Pro,find x9 pro,device-list
+OPPO,Smartphone,OPPO Find X9 Ultra,find x9 ultra,device-list
+OPPO,Smartphone,OPPO K12,oppo k12,device-list
+OPPO,Smartphone,OPPO Reno,,AKien
+OPPO,Smartphone,OPPO Reno10,reno 10,device-list
+OPPO,Smartphone,OPPO Reno10 F,reno 10f,device-list
+OPPO,Smartphone,OPPO Reno10 Pro,reno 10 pro,device-list
+OPPO,Smartphone,OPPO Reno10 Pro+,reno 10 pro plus,device-list
+OPPO,Smartphone,OPPO Reno11,reno 11,device-list
+OPPO,Smartphone,OPPO Reno11 F,reno 11f,device-list
+OPPO,Smartphone,OPPO Reno11 Pro,reno 11 pro,device-list
+OPPO,Smartphone,OPPO Reno11 Pro+,reno 11 pro plus,device-list
+OPPO,Smartphone,OPPO Reno12,reno 12,device-list
+OPPO,Smartphone,OPPO Reno12 F,reno 12f,device-list
+OPPO,Smartphone,OPPO Reno12 Pro,reno 12 pro,device-list
+OPPO,Smartphone,OPPO Reno12 Pro+,reno 12 pro plus,device-list
+OPPO,Smartphone,OPPO Reno13,reno 13,device-list
+OPPO,Smartphone,OPPO Reno13 F,reno 13f,device-list
+OPPO,Smartphone,OPPO Reno13 Pro,reno 13 pro,device-list
+OPPO,Smartphone,OPPO Reno13 Pro+,reno 13 pro plus,device-list
+OPPO,Smartphone,OPPO Reno14,reno 14,device-list
+OPPO,Smartphone,OPPO Reno14 F,reno 14f,device-list
+OPPO,Smartphone,OPPO Reno14 Pro,reno 14 pro,device-list
+OPPO,Smartphone,OPPO Reno14 Pro+,reno 14 pro plus,device-list
+OPPO,Smartphone,OPPO Reno2,,AKien
+OPPO,Smartphone,OPPO Reno5,reno 5,AKien+device-list
+OPPO,Smartphone,OPPO Reno5 F,reno 5f,device-list
+OPPO,Smartphone,OPPO Reno5 Pro,reno 5 pro,device-list
+OPPO,Smartphone,OPPO Reno5 Pro+,reno 5 pro plus,device-list
+OPPO,Smartphone,OPPO Reno6,reno 6,AKien+device-list
+OPPO,Smartphone,OPPO Reno6 F,reno 6f,device-list
+OPPO,Smartphone,OPPO Reno6 Pro,reno 6 pro,device-list
+OPPO,Smartphone,OPPO Reno6 Pro+,reno 6 pro plus,device-list
+OPPO,Smartphone,OPPO Reno7,,AKien
+OPPO,Smartphone,OPPO Reno7 F,reno 7f,device-list
+OPPO,Smartphone,OPPO Reno7 Pro,reno 7 pro,device-list
+OPPO,Smartphone,OPPO Reno7 Pro+,reno 7 pro plus,device-list
+OPPO,Smartphone,OPPO Reno8,reno 8,AKien+device-list
+OPPO,Smartphone,OPPO Reno8 F,reno 8f,device-list
+OPPO,Smartphone,OPPO Reno8 Pro,reno 8 pro,device-list
+OPPO,Smartphone,OPPO Reno8 Pro+,reno 8 pro plus,device-list
+OPPO,Smartphone,OPPO Reno9,reno 9,device-list
+OPPO,Smartphone,OPPO Reno9 F,reno 9f,device-list
+OPPO,Smartphone,OPPO Reno9 Pro,reno 9 pro,device-list
+OPPO,Smartphone,OPPO Reno9 Pro+,reno 9 pro plus,device-list
+Realme,Smartphone,Realme 1,,AKien
+Realme,Smartphone,Realme 10,realme 10,device-list
+Realme,Smartphone,Realme 10 Pro,realme 10 pro,device-list
+Realme,Smartphone,Realme 10 Pro+,realme 10 pro plus,device-list
+Realme,Smartphone,Realme 11,realme 11,device-list
+Realme,Smartphone,Realme 11 Pro,realme 11 pro,device-list
+Realme,Smartphone,Realme 11 Pro+,realme 11 pro plus,device-list
+Realme,Smartphone,Realme 12,realme 12,device-list
+Realme,Smartphone,Realme 12 Pro,realme 12 pro,device-list
+Realme,Smartphone,Realme 12 Pro+,realme 12 pro plus,device-list
+Realme,Smartphone,Realme 13,realme 13,device-list
+Realme,Smartphone,Realme 13 Pro,realme 13 pro,device-list
+Realme,Smartphone,Realme 13 Pro+,realme 13 pro plus,device-list
+Realme,Smartphone,Realme 14,realme 14,device-list
+Realme,Smartphone,Realme 14 Pro,realme 14 pro,device-list
+Realme,Smartphone,Realme 14 Pro+,realme 14 pro plus,device-list
+Realme,Smartphone,Realme 9,realme 9,device-list
+Realme,Smartphone,Realme 9 Pro,realme 9 pro,device-list
+Realme,Smartphone,Realme 9 Pro+,realme 9 pro plus,device-list
+Realme,Smartphone,Realme C33,realme c33,device-list
+Realme,Smartphone,Realme C53,realme c53,device-list
+Realme,Smartphone,Realme C55,realme c55,device-list
+Realme,Smartphone,Realme C63,realme c63,device-list
+Realme,Smartphone,Realme C75,realme c75,device-list
+Realme,Smartphone,Realme GT 2,realme gt2,device-list
+Realme,Smartphone,Realme GT 3,realme gt3,device-list
+Realme,Smartphone,Realme GT 5,realme gt5,device-list
+Realme,Smartphone,Realme GT 6,realme gt6,device-list
+Realme,Smartphone,Realme GT 7,realme gt7,device-list
+Realme,Smartphone,Realme GT 7 Pro,realme gt7 pro,device-list
+Realme,Smartphone,Realme Narzo 60,narzo 60,device-list
+Realme,Smartphone,Realme Narzo 70,narzo 70,device-list
+Realme,Smartphone,Realme Narzo 80,narzo 80,device-list
+Samsung,Smartphone,Samsung A10,a10|galaxy a10|samsung a10,AKien+device-list
+Samsung,Smartphone,Samsung A20,a20|galaxy a20|samsung a20,AKien+device-list
+Samsung,Smartphone,Samsung A21,,AKien
+Samsung,Smartphone,Samsung A33,a33|galaxy a33|samsung a33,AKien+device-list
+Samsung,Smartphone,Samsung A50,a50|galaxy a50|samsung a50,AKien+device-list
+Samsung,Smartphone,Samsung A51,a51|galaxy a51|samsung a51,AKien+device-list
+Samsung,Smartphone,Samsung A52s,a52s|galaxy a52s|samsung a52s,AKien+device-list
+Samsung,Smartphone,Samsung A56,a56|galaxy a56|samsung a56,AKien+device-list
+Samsung,Smartphone,Samsung A70,galaxy a70|samsung a70|a70,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy 3,,AKien
+Samsung,Smartphone,Samsung Galaxy A Quantum,,AKien
+Samsung,Smartphone,Samsung Galaxy A01,a01|galaxy a01|samsung a01,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A02,a02|galaxy a02|samsung a02,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A02s,a02s|galaxy a02s|samsung a02s,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A03,a03|galaxy a03|samsung a03,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A03 Core,a03 core|galaxy a03 core|samsung a03 core,device-list
+Samsung,Smartphone,Samsung Galaxy A03s,a03s|galaxy a03s|samsung a03s,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A04,a04|galaxy a04|samsung a04,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A04e,a04e|galaxy a04e|samsung a04e,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A04s,a04s|galaxy a04s|samsung a04s,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A05,a05|galaxy a05|samsung a05,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A05s,a05s|galaxy a05s|samsung a05s,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A06,a06|galaxy a06|samsung a06,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A10,,AKien
+Samsung,Smartphone,Samsung Galaxy A10e,,AKien
+Samsung,Smartphone,Samsung Galaxy A10s,a10s|galaxy a10s|samsung a10s,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A11,a11|galaxy a11|samsung a11,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A12,galaxy a12|samsung a12,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A13,a13|galaxy a13|samsung a13,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A14,a14|galaxy a14|samsung a14,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A15 5G,a15|galaxy a15|samsung a15,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A16,galaxy a16|samsung a16,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A17,a17|galaxy a17|samsung a17,device-list
+Samsung,Smartphone,Samsung Galaxy A20,,AKien
+Samsung,Smartphone,Samsung Galaxy A20s,a20s|galaxy a20s|samsung a20s,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A21,,AKien
+Samsung,Smartphone,Samsung Galaxy A21s,a21s|galaxy a21s|samsung a21s,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A22,a22|galaxy a22|samsung a22,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A23,a23|galaxy a23|samsung a23,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A24,a24|galaxy a24|samsung a24,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A25 5G,a25|galaxy a25|samsung a25,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A26,a26|galaxy a26|samsung a26,device-list
+Samsung,Smartphone,Samsung Galaxy A30,a30|galaxy a30|samsung a30,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A30s,a30s|galaxy a30s|samsung a30s,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A31,galaxy a31|samsung a31,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A32,galaxy a32|samsung a32,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A33 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy A34 5G,samsung a34|galaxy a34,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A35,galaxy a35|samsung a35,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A36,a36|galaxy a36|samsung a36,device-list
+Samsung,Smartphone,Samsung Galaxy A42 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy A50,,AKien
+Samsung,Smartphone,Samsung Galaxy A50s,a50s|galaxy a50s|samsung a50s,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A51,,AKien
+Samsung,Smartphone,Samsung Galaxy A52,galaxy a52|samsung a52,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A52s 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy A53 5G,galaxy a53|samsung a53,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A54 5G,galaxy a54|samsung a54,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A55,a55|galaxy a55|samsung a55,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A6,,AKien
+Samsung,Smartphone,Samsung Galaxy A7,,AKien
+Samsung,Smartphone,Samsung Galaxy A70,,AKien
+Samsung,Smartphone,Samsung Galaxy A71,galaxy a71|samsung a71,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A72,galaxy a72|samsung a72,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A73 5G,galaxy a73|samsung a73,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A8 Star,,AKien
+Samsung,Smartphone,Samsung Galaxy A80,galaxy a80|samsung a80|a80,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy A9,,AKien
+Samsung,Smartphone,Samsung Galaxy A9 Pro,,AKien
+Samsung,Smartphone,Samsung Galaxy A90,a90|galaxy a90|samsung a90,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Buddy,,AKien
+Samsung,Smartphone,Samsung Galaxy Core Mini,,AKien
+Samsung,Smartphone,Samsung Galaxy F13,f13|galaxy f13|samsung f13,device-list
+Samsung,Smartphone,Samsung Galaxy F14,f14|galaxy f14|samsung f14,device-list
+Samsung,Smartphone,Samsung Galaxy F15,f15|galaxy f15|samsung f15,device-list
+Samsung,Smartphone,Samsung Galaxy F23,f23|galaxy f23|samsung f23,device-list
+Samsung,Smartphone,Samsung Galaxy F54,f54|galaxy f54|samsung f54,device-list
+Samsung,Smartphone,Samsung Galaxy F55,f55|galaxy f55|samsung f55,device-list
+Samsung,Smartphone,Samsung Galaxy Fold,z fold,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy J4,,AKien
+Samsung,Smartphone,Samsung Galaxy J6,,AKien
+Samsung,Smartphone,Samsung Galaxy J8,,AKien
+Samsung,Smartphone,Samsung Galaxy Jump 2,,AKien
+Samsung,Smartphone,Samsung Galaxy M11,,AKien
+Samsung,Smartphone,Samsung Galaxy M12,m12|galaxy m12|samsung m12,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy M13,m13|galaxy m13|samsung m13,device-list
+Samsung,Smartphone,Samsung Galaxy M14 5G,m14|galaxy m14|samsung m14,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy M15,m15|galaxy m15|samsung m15,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy M21,,AKien
+Samsung,Smartphone,Samsung Galaxy M22,,AKien
+Samsung,Smartphone,Samsung Galaxy M23 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy M30s,,AKien
+Samsung,Smartphone,Samsung Galaxy M31,m31|galaxy m31|samsung m31,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy M32,,AKien
+Samsung,Smartphone,Samsung Galaxy M33 5G,m33|galaxy m33|samsung m33,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy M34 5G,m34|galaxy m34|samsung m34,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy M35,m35|galaxy m35|samsung m35,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy M51,,AKien
+Samsung,Smartphone,Samsung Galaxy M52 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy M53 5G,m53|galaxy m53|samsung m53,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy M54,m54|galaxy m54|samsung m54,device-list
+Samsung,Smartphone,Samsung Galaxy M55,m55|galaxy m55|samsung m55,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy M62,,AKien
+Samsung,Smartphone,Samsung Galaxy Note,,AKien
+Samsung,Smartphone,Samsung Galaxy Note 20 Ultra,,AKien
+Samsung,Smartphone,Samsung Galaxy Note10,,AKien
+Samsung,Smartphone,Samsung Galaxy Note10 Lite,,AKien
+Samsung,Smartphone,Samsung Galaxy Note20,,AKien
+Samsung,Smartphone,Samsung Galaxy Note20 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy Note20 Ultra,,AKien
+Samsung,Smartphone,Samsung Galaxy Note20 Ultra 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy Note8,,AKien
+Samsung,Smartphone,Samsung Galaxy Note9,,AKien
+Samsung,Smartphone,Samsung Galaxy S10,s10,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S10 5G,s10 5g,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S10 Lite,s10 lite,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S10+,s10 plus,device-list
+Samsung,Smartphone,Samsung Galaxy S10e,s10e,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S20,s20,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S20 FE,s20fe,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S20 FE 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy S20 Ultra,s20 ultra,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S20+,s20 plus,device-list
+Samsung,Smartphone,Samsung Galaxy S21,s21,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S21 FE,s21fe,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S21 Ultra,s21 ultra,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S21+,s21 plus,device-list
+Samsung,Smartphone,Samsung Galaxy S22,s22,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S22 Ultra,s22 ultra,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S22+,s22 plus,device-list
+Samsung,Smartphone,Samsung Galaxy S23,s23,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S23 FE,s23fe,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S23 Ultra,s23 ultra,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S23+,s23 plus,device-list
+Samsung,Smartphone,Samsung Galaxy S24,s24,device-list
+Samsung,Smartphone,Samsung Galaxy S24 FE,s24fe,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S24 Ultra,s24 ultra,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S24+,s24 plus,device-list
+Samsung,Smartphone,Samsung Galaxy S25,s25,device-list
+Samsung,Smartphone,Samsung Galaxy S25 Edge,s25 edge,device-list
+Samsung,Smartphone,Samsung Galaxy S25 FE,s25fe,device-list
+Samsung,Smartphone,Samsung Galaxy S25 Ultra,s25 ultra,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S25+,s25 plus,device-list
+Samsung,Smartphone,Samsung Galaxy S26,s26,device-list
+Samsung,Smartphone,Samsung Galaxy S26 Ultra,s26 ultra,device-list
+Samsung,Smartphone,Samsung Galaxy S26+,s26 plus,device-list
+Samsung,Smartphone,Samsung Galaxy S9,s9,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S9+,s9 plus,device-list
+Samsung,Smartphone,Samsung Galaxy Tab S10 Ultra,,AKien
+Samsung,Smartphone,Samsung Galaxy Z Flip 5G,z flip 5g,device-list
+Samsung,Smartphone,Samsung Galaxy Z Flip3,z flip 3,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Z Flip4,z flip 4,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Z Flip5,z flip 5,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Z Flip6,z flip 6,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Z Flip7,z flip 7,device-list
+Samsung,Smartphone,Samsung Galaxy Z Flip8,z flip 8,device-list
+Samsung,Smartphone,Samsung Galaxy Z Fold2,z fold 2,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Z Fold3,z fold 3,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Z Fold4,z fold 4,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Z Fold5,z fold 5,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Z Fold6,z fold 6,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy Z Fold7,z fold 7,device-list
+Samsung,Smartphone,Samsung Galaxy Z Fold8,z fold 8,device-list
+Samsung,Smartphone,Samsung Galaxy Z TriFold,z trifold,device-list
+Sony,Smartphone,Sony Xperia 1 III,xperia 1 iii,device-list
+Sony,Smartphone,Sony Xperia 1 IV,xperia 1iv,device-list
+Sony,Smartphone,Sony Xperia 1 V,xperia 1v,device-list
+Sony,Smartphone,Sony Xperia 1 VI,xperia 1vi,device-list
+Sony,Smartphone,Sony Xperia 1 VII,xperia 1 vii,device-list
+Sony,Smartphone,Sony Xperia 10 III,xperia 10 iii,device-list
+Sony,Smartphone,Sony Xperia 10 IV,xperia 10iv,device-list
+Sony,Smartphone,Sony Xperia 10 V,xperia 10v,device-list
+Sony,Smartphone,Sony Xperia 10 VI,xperia 10vi,device-list
+Sony,Smartphone,Sony Xperia 10 VII,xperia 10 vii,device-list
+Sony,Smartphone,Sony Xperia 5 III,xperia 5 iii,device-list
+Sony,Smartphone,Sony Xperia 5 IV,xperia 5iv,device-list
+Sony,Smartphone,Sony Xperia 5 V,xperia 5v,device-list
+Tecno,Smartphone,Tecno Camon 19,camon 19,device-list
+Tecno,Smartphone,Tecno Camon 20,camon 20,device-list
+Tecno,Smartphone,Tecno Camon 30,camon 30,device-list
+Tecno,Smartphone,Tecno Camon 40,camon 40,device-list
+Tecno,Smartphone,Tecno Phantom V Flip,phantom v flip,device-list
+Tecno,Smartphone,Tecno Phantom V Fold,phantom v fold,device-list
+Tecno,Smartphone,Tecno Pova 5,pova 5,device-list
+Tecno,Smartphone,Tecno Pova 6,pova 6,device-list
+Tecno,Smartphone,Tecno Pova 7,pova 7,device-list
+Tecno,Smartphone,Tecno Spark 10,tecno spark 10,device-list
+Tecno,Smartphone,Tecno Spark 20,tecno spark 20,device-list
+Tecno,Smartphone,Tecno Spark 30,tecno spark 30,device-list
+Vivo,Smartphone,iQOO 10,iqoo 10,device-list
+Vivo,Smartphone,iQOO 11,iqoo 11,device-list
+Vivo,Smartphone,iQOO 12,iqoo 12,device-list
+Vivo,Smartphone,iQOO 13,iqoo 13,device-list
+Vivo,Smartphone,iQOO 9,iqoo 9,device-list
+Vivo,Smartphone,iQOO Neo 10,iqoo neo 10,device-list
+Vivo,Smartphone,iQOO Neo 7,iqoo neo 7,device-list
+Vivo,Smartphone,iQOO Neo 8,iqoo neo 8,device-list
+Vivo,Smartphone,iQOO Neo 9,iqoo neo 9,device-list
+Vivo,Smartphone,iQOO Z10,iqoo z10,device-list
+Vivo,Smartphone,iQOO Z7,iqoo z7,device-list
+Vivo,Smartphone,iQOO Z9,iqoo z9,device-list
+Vivo,Smartphone,Vivo V11 Pro,,AKien
+Vivo,Smartphone,Vivo V17 Pro,,AKien
+Vivo,Smartphone,Vivo V23,vivo v23,device-list
+Vivo,Smartphone,Vivo V25,vivo v25,device-list
+Vivo,Smartphone,Vivo V27,vivo v27,device-list
+Vivo,Smartphone,Vivo V29,vivo v29,device-list
+Vivo,Smartphone,Vivo V30,vivo v30,device-list
+Vivo,Smartphone,Vivo V40,vivo v40,device-list
+Vivo,Smartphone,Vivo V50,vivo v50,device-list
+Vivo,Smartphone,Vivo X Flip,vivo x flip,device-list
+Vivo,Smartphone,Vivo X Fold 3,vivo x fold 3,device-list
+Vivo,Smartphone,Vivo X Fold 5,vivo x fold 5,device-list
+Vivo,Smartphone,Vivo X100,vivo x100,device-list
+Vivo,Smartphone,Vivo X100 Pro,vivo x100 pro,device-list
+Vivo,Smartphone,Vivo X100 Pro+,vivo x100 pro plus,device-list
+Vivo,Smartphone,Vivo X200,vivo x200,device-list
+Vivo,Smartphone,Vivo X200 Pro,vivo x200 pro,device-list
+Vivo,Smartphone,Vivo X200 Pro+,vivo x200 pro plus,device-list
+Vivo,Smartphone,Vivo X50 5G,,AKien
+Vivo,Smartphone,Vivo X50 Pro,,AKien
+Vivo,Smartphone,Vivo X60,vivo x60,device-list
+Vivo,Smartphone,Vivo X60 Pro,vivo x60 pro,device-list
+Vivo,Smartphone,Vivo X60 Pro+,vivo x60 pro plus,device-list
+Vivo,Smartphone,Vivo X70,vivo x70,device-list
+Vivo,Smartphone,Vivo X70 Pro,vivo x70 pro,device-list
+Vivo,Smartphone,Vivo X70 Pro+,vivo x70 pro plus,device-list
+Vivo,Smartphone,Vivo X80,vivo x80,device-list
+Vivo,Smartphone,Vivo X80 Pro,vivo x80 pro,device-list
+Vivo,Smartphone,Vivo X80 Pro+,vivo x80 pro plus,device-list
+Vivo,Smartphone,Vivo X90,vivo x90,device-list
+Vivo,Smartphone,Vivo X90 Pro,vivo x90 pro,device-list
+Vivo,Smartphone,Vivo X90 Pro+,vivo x90 pro plus,device-list
+Vivo,Smartphone,Vivo Y100,vivo y100,device-list
+Vivo,Smartphone,Vivo Y11 (2019),,AKien
+Vivo,Smartphone,Vivo Y12s,,AKien
+Vivo,Smartphone,Vivo Y17s,vivo y17s,device-list
+Vivo,Smartphone,Vivo Y20 (2021),,AKien
+Vivo,Smartphone,Vivo Y200,vivo y200,device-list
+Vivo,Smartphone,Vivo Y27,vivo y27,device-list
+Vivo,Smartphone,Vivo Y28,vivo y28,device-list
+Vivo,Smartphone,Vivo Y29,vivo y29,device-list
+Vivo,Smartphone,Vivo Y300,vivo y300,device-list
+Vivo,Smartphone,Vivo Y36,vivo y36,device-list
+Vivo,Smartphone,Vivo Y51,,AKien
+Vivo,Smartphone,Vivo Y81,,AKien
+Vivo,Smartphone,Vivo Y90,,AKien
+Xiaomi,Smartphone,POCO C65,poco c65,device-list
+Xiaomi,Smartphone,POCO C75,poco c75,device-list
+Xiaomi,Smartphone,POCO F3,poco f3,device-list
+Xiaomi,Smartphone,POCO F4,poco f4,device-list
+Xiaomi,Smartphone,POCO F5,poco f5,device-list
+Xiaomi,Smartphone,POCO F6,poco f6,device-list
+Xiaomi,Smartphone,POCO F7,poco f7,device-list
+Xiaomi,Smartphone,POCO M3,m2010j19cg,AKien+device-list
+Xiaomi,Smartphone,POCO M4,poco m4,device-list
+Xiaomi,Smartphone,POCO M5,poco m5,device-list
+Xiaomi,Smartphone,POCO M6,poco m6,device-list
+Xiaomi,Smartphone,POCO M7,poco m7,device-list
+Xiaomi,Smartphone,POCO X3 NFC,m2007j20cg,AKien+device-list
+Xiaomi,Smartphone,POCO X3 Pro,poco x3 pro,device-list
+Xiaomi,Smartphone,POCO X4,poco x4,device-list
+Xiaomi,Smartphone,POCO X5,poco x5,device-list
+Xiaomi,Smartphone,POCO X6,poco x6,device-list
+Xiaomi,Smartphone,POCO X7,poco x7,device-list
+Xiaomi,Smartphone,Redmi Note 10,redmi note 10,device-list
+Xiaomi,Smartphone,Redmi Note 14 Pro,redmi note 14 pro,device-list
+Xiaomi,Smartphone,Xiaomi 12,xiaomi 12|mi12,device-list
+Xiaomi,Smartphone,Xiaomi 12 Pro,xiaomi 12 pro|mi12 pro,device-list
+Xiaomi,Smartphone,Xiaomi 12T,xiaomi 12t|mi12t,device-list
+Xiaomi,Smartphone,Xiaomi 12T Pro,xiaomi 12t pro|mi12t pro,device-list
+Xiaomi,Smartphone,Xiaomi 13,xiaomi 13|mi13,device-list
+Xiaomi,Smartphone,Xiaomi 13 Pro,xiaomi 13 pro|mi13 pro,device-list
+Xiaomi,Smartphone,Xiaomi 13 Ultra,xiaomi 13 ultra|mi13 ultra,device-list
+Xiaomi,Smartphone,Xiaomi 13T,xiaomi 13t|mi13t,device-list
+Xiaomi,Smartphone,Xiaomi 14,xiaomi 14|mi14,device-list
+Xiaomi,Smartphone,Xiaomi 14 Pro,xiaomi 14 pro|mi14 pro,device-list
+Xiaomi,Smartphone,Xiaomi 14 Ultra,xiaomi 14 ultra|mi14 ultra,device-list
+Xiaomi,Smartphone,Xiaomi 14T,xiaomi 14t|mi14t,AKien+device-list
+Xiaomi,Smartphone,Xiaomi 15,xiaomi 15|mi15,device-list
+Xiaomi,Smartphone,Xiaomi 15 Pro,xiaomi 15 pro|mi15 pro,device-list
+Xiaomi,Smartphone,Xiaomi 15 Ultra,xiaomi 15 ultra|mi15 ultra,device-list
+Xiaomi,Smartphone,Xiaomi 17,xiaomi 17|mi17,device-list
+Xiaomi,Smartphone,Xiaomi 17 Pro,xiaomi 17 pro|mi17 pro,device-list
+Xiaomi,Smartphone,Xiaomi 17 Ultra,xiaomi 17 ultra|mi17 ultra,device-list
+Xiaomi,Smartphone,Xiaomi Mi 10,mi10,device-list
+Xiaomi,Smartphone,Xiaomi Mi 10T,mi10t,device-list
+Xiaomi,Smartphone,Xiaomi Mi 10T Lite 5G,m2007j17g,AKien+device-list
+Xiaomi,Smartphone,Xiaomi Mi 10T Pro 5G,m2007j17c|m2007j3sg,AKien+device-list
+Xiaomi,Smartphone,Xiaomi Mi 11,mi11,device-list
+Xiaomi,Smartphone,Xiaomi Mi 11 Lite,mi11 lite,device-list
+Xiaomi,Smartphone,Xiaomi Mi 9,mi9,device-list
+Xiaomi,Smartphone,Xiaomi Mi Mix,,AKien
+Xiaomi,Smartphone,Xiaomi MIX Flip,mix flip,device-list
+Xiaomi,Smartphone,Xiaomi MIX Flip 2,mix flip 2,device-list
+Xiaomi,Smartphone,Xiaomi MIX Fold 3,mix fold 3,device-list
+Xiaomi,Smartphone,Xiaomi MIX Fold 4,mix fold 4,device-list
+Xiaomi,Smartphone,Xiaomi MIX Fold 5,mix fold 5,device-list
+Xiaomi,Smartphone,Xiaomi Redmi,,AKien
+Xiaomi,Smartphone,Xiaomi Redmi 10A,redmi 10a,device-list
+Xiaomi,Smartphone,Xiaomi Redmi 10C,redmi 10c,device-list
+Xiaomi,Smartphone,Xiaomi Redmi 10X 4G,m2003j15sc,AKien+device-list
+Xiaomi,Smartphone,Xiaomi Redmi 10X 5G,,AKien
+Xiaomi,Smartphone,Xiaomi Redmi 12C,redmi 12c,device-list
+Xiaomi,Smartphone,Xiaomi Redmi 13C,redmi 13c,device-list
+Xiaomi,Smartphone,Xiaomi Redmi 14C,redmi 14c,device-list
+Xiaomi,Smartphone,Xiaomi Redmi 9,m2004j19c,AKien+device-list
+Xiaomi,Smartphone,Xiaomi Redmi 9A,m2006c3lc|m2006c3lg|m2006c3li|redmi 9a,AKien+device-list
+Xiaomi,Smartphone,Xiaomi Redmi 9C,m2006c3mg|m2006c3mt,AKien+device-list
+Xiaomi,Smartphone,Xiaomi Redmi 9T,m2010j19sg,AKien+device-list
+Xiaomi,Smartphone,Xiaomi Redmi K30,,AKien
+Xiaomi,Smartphone,Xiaomi Redmi K30 Ultra,m2006j10c,AKien+device-list
+Xiaomi,Smartphone,Xiaomi Redmi K50,redmi k50,device-list
+Xiaomi,Smartphone,Xiaomi Redmi K60,redmi k60,device-list
+Xiaomi,Smartphone,Xiaomi Redmi K70,redmi k70,device-list
+Xiaomi,Smartphone,Xiaomi Redmi K80,redmi k80,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 10 Pro,redmi note 10 pro,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 10 Pro+,redmi note 10 pro plus,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 11,redmi note 11,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 11 Pro,redmi note 11 pro,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 11 Pro+,redmi note 11 pro plus,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 12,redmi note 12,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 12 Pro,redmi note 12 pro,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 12 Pro+,redmi note 12 pro plus,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 13,redmi note 13,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 13 Pro,redmi note 13 pro,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 13 Pro+,redmi note 13 pro plus,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 14,redmi note 14,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 14 Pro+,redmi note 14 pro plus,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 8,redmi note 8,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 8 Pro,redmi note 8 pro,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 8 Pro+,redmi note 8 pro plus,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 9,redmi note 9,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 9 Pro,redmi note 9 pro,device-list
+Xiaomi,Smartphone,Xiaomi Redmi Note 9 Pro+,redmi note 9 pro plus,device-list
+Xiaomi,Smartphone,Xiaomi Redmi S2 (Redmi Y2),,AKien
+Xolo,Smartphone,Xolo Era 2,,AKien
+ZTE,Smartphone,ZTE Blade A54,blade a54,device-list
+ZTE,Smartphone,ZTE Blade V50,blade v50,device-list
+ZTE,Smartphone,ZTE Blade V70,blade v70,device-list
+ZTE,Smartphone,ZTE nubia Flip,nubia flip,device-list
+ZTE,Smartphone,ZTE nubia Flip 2,nubia flip 2,device-list
+ZTE,Smartphone,ZTE nubia Z50 Ultra,nubia z50 ultra,device-list
+ZTE,Smartphone,ZTE nubia Z60 Ultra,nubia z60 ultra,device-list
+ZTE,Smartphone,ZTE nubia Z70 Ultra,nubia z70 ultra,device-list
+ZTE,Smartphone,ZTE RedMagic 10 Pro,redmagic 10 pro|red magic 10 pro,device-list
+ZTE,Smartphone,ZTE RedMagic 8 Pro,redmagic 8 pro|red magic 8 pro,device-list
+ZTE,Smartphone,ZTE RedMagic 9 Pro,redmagic 9 pro|red magic 9 pro,device-list
+Acer,Tablet,Acer Iconia Tab 10,,AKien
+Alcatel,Tablet,Alcatel Tablet PC,,AKien
+Amazon,Tablet,Amazon Fire HD 10,fire hd10,device-list
+Amazon,Tablet,Amazon Fire HD 8,fire hd8,device-list
+Amazon,Tablet,Amazon Fire Max 11,fire max 11,device-list
+Apple,Tablet,iPad,re:.*ipad.*,AKien+device-list
+Google,Tablet,Google Pixel Tablet,pixel tablet,device-list
+HONOR,Tablet,Honor Pad 10,honor pad 10,device-list
+Huawei,Tablet,Huawei MatePad 11,matepad 11,device-list
+Huawei,Tablet,Huawei MatePad Pro,matepad pro,device-list
+Huawei,Tablet,Huawei MediaPad T3 10,,AKien
+Huawei,Tablet,Huawei MediaPad T5,,AKien
+Lenovo,Tablet,Lenovo Legion Tab,legion tab,device-list
+Lenovo,Tablet,Lenovo Tab M11,tab m11,device-list
+Lenovo,Tablet,Lenovo Tab P12,tab p12,device-list
+Lenovo,Tablet,Lenovo Tab Plus,lenovo tab plus,device-list
+Masstel,Tablet,Masstel Tab,masstel tab,device-list
+OnePlus,Tablet,OnePlus Pad 3,oneplus pad 3|one plus pad 3,device-list
+OPPO,Tablet,OPPO Pad 3,oppo pad 3,device-list
+Samsung,Tablet,Samsung Galaxy Tab A,tab a8 0|tab a10 1,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab A7 (2020),tab a7,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab A7 Lite,tab a7 lite,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab A8,tab a8,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab A9,tab a9,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab A9+,tab a9 plus,device-list
+Samsung,Tablet,Samsung Galaxy Tab S10+,tab s10 plus,device-list
+Samsung,Tablet,Samsung Galaxy Tab S11,tab s11,device-list
+Samsung,Tablet,Samsung Galaxy Tab S11 Ultra,tab s11 ultra,device-list
+Samsung,Tablet,Samsung Galaxy Tab S4,,AKien
+Samsung,Tablet,Samsung Galaxy Tab S5e,,AKien
+Samsung,Tablet,Samsung Galaxy Tab S6,,AKien
+Samsung,Tablet,Samsung Galaxy Tab S6 Lite,tab s6 lite,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab S7,tab s7,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab S7 FE,tab s7fe,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab S7+,tab s7 plus,device-list
+Samsung,Tablet,Samsung Galaxy Tab S8,tab s8,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab S8 Ultra,tab s8 ultra,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab S8+,tab s8 plus,device-list
+Samsung,Tablet,Samsung Galaxy Tab S9,tab s9,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab S9 FE,tab s9fe,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab S9 Ultra,tab s9 ultra,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab S9+,tab s9 plus,device-list
+Xiaomi,Tablet,Xiaomi Pad 5,,AKien
+Xiaomi,Tablet,Xiaomi Pad 6,xiaomi pad 6|mi pad 6,device-list
+Xiaomi,Tablet,Xiaomi Pad 7,xiaomi pad 7|mi pad 7,device-list
+Apple,Smart Watch,Apple Watch,,AKien
+Samsung,Smart Watch,Samsung Galaxy Gear S3 Classic,,AKien
+Samsung,Smart Watch,Samsung Galaxy Watch 3,,AKien
+Samsung,Smart Watch,Samsung Galaxy Watch Active,,AKien
+Samsung,Smart Watch,Samsung Galaxy Watch Active 2,,AKien
+Samsung,Smart Watch,Samsung Gear S2,,AKien
+,Laptop,Chromebook,chromebook,device-list
+Acer,Laptop,Acer Aspire,aspire,device-list
+Acer,Laptop,Acer Nitro/Predator,acer nitro|acer predator,device-list
+Acer,Laptop,Acer Swift,acer swift,device-list
+Apple,Laptop,iMac,re:(?:.*[^a-z0-9])?imac.*,AKien+device-list
+Apple,Laptop,Mac mini,mac mini,device-list
+Apple,Laptop,Mac Studio,mac studio,device-list
+Apple,Laptop,MacBook,macbook air|macbook,AKien+device-list
+Apple,Laptop,MacBook Pro,macbook pro|mbp,AKien+device-list
+ASUS,Laptop,ASUS ProArt,proart,device-list
+ASUS,Laptop,ASUS ROG,rog zephyrus|rog strix|zephyrus,device-list
+ASUS,Laptop,ASUS TUF,tuf gaming,device-list
+ASUS,Laptop,ASUS VivoBook,vivobook,device-list
+ASUS,Laptop,ASUS ZenBook,zenbook,device-list
+Dell,Laptop,Dell Inspiron,inspiron,device-list
+Dell,Laptop,Dell Latitude,latitude,device-list
+Dell,Laptop,Dell OptiPlex,optiplex,device-list
+Dell,Laptop,Dell Precision,dell precision,device-list
+Dell,Laptop,Dell Vostro,vostro,device-list
+Dell,Laptop,Dell XPS,xps,device-list
+Dynabook,Laptop,Dynabook Portégé,portege,device-list
+Framework,Laptop,Framework Laptop,framework laptop,device-list
+Fujitsu,Laptop,Fujitsu LifeBook,lifebook,device-list
+Gigabyte,Laptop,Gigabyte Aero,gigabyte aero,device-list
+Gigabyte,Laptop,Gigabyte Aorus,aorus,device-list
+HP,Laptop,HP EliteBook,elitebook,device-list
+HP,Laptop,HP Envy,hp envy,device-list
+HP,Laptop,HP Omen/Victus,omen|victus,device-list
+HP,Laptop,HP Pavilion,pavilion,device-list
+HP,Laptop,HP ProBook,probook,device-list
+HP,Laptop,HP Spectre,spectre,device-list
+HP,Laptop,HP ZBook,zbook,device-list
+Huawei,Laptop,Huawei MateBook,matebook,device-list
+Lenovo,Laptop,Lenovo IdeaPad,ideapad,device-list
+Lenovo,Laptop,Lenovo Legion,legion 5|legion 7|legion pro|legion slim,device-list
+Lenovo,Laptop,Lenovo ThinkCentre,thinkcentre,device-list
+Lenovo,Laptop,Lenovo thinkpad,thinkpad,AKien+device-list
+Lenovo,Laptop,Lenovo Yoga,lenovo yoga,device-list
+LG,Laptop,LG gram,lg gram,device-list
+Microsoft,Laptop,Microsoft Surface Laptop,surface laptop,device-list
+Microsoft,Laptop,Microsoft Surface Pro,surface pro,device-list
+Microsoft,Laptop,Microsoft Surface Studio,surface studio,device-list
+MSI,Laptop,MSI Gaming,msi katana|msi stealth|msi raider,device-list
+MSI,Laptop,MSI Prestige/Modern,msi prestige|msi modern,device-list
+Razer,Laptop,Razer Blade,razer blade,device-list
+Samsung,Laptop,Samsung Galaxy Book,galaxy book|galaxy book 4|galaxy book 5|samsung book|samsung book 4|samsung book 5,device-list
+,Television,,android tv|google tv|smart tv,device-list
+Amazon,Television,Amazon Fire TV,fire tv|fire tv stick|fire tv cube,device-list
+Apple,Television,Apple TV,apple tv,device-list
+Coocaa,Television,Coocaa TV,coocaa,device-list
+FPT,Television,FPT Play Box,fpt play|fpt play box,device-list
+Google,Television,Google Chromecast,chromecast,device-list
+Google,Television,Google TV Streamer,google tv streamer,device-list
+Hisense,Television,Hisense VIDAA TV,vidaa,device-list
+LG,Television,LG Smart TV,re:(?:.*[^a-z0-9])?lg[-_. ]?webos.*,AKien+device-list
+Nvidia,Television,Nvidia Shield TV,shield tv|shield android tv,device-list
+Panasonic,Television,Panasonic Viera,viera,device-list
+Roku,Television,Roku Player,roku,device-list
+Samsung,Television,Samsung Tizen TV,samsung tv|samsung smart tv|tizen,device-list
+Sony,Television,Sony Smart TV Bravia,re:(?:.*[^a-z0-9])?bravia.*,AKien+device-list
+Viettel,Television,Viettel TV Box,viettel tv|viettel tv box,device-list
+VNPT Tech,Television,VNPT SmartBox,vnpt smartbox|vnpt smart box,device-list
+Xiaomi,Television,Xiaomi Mi Box,mi box|xiaomi tv box|xiaomi tv stick,device-list
+Xiaomi,Television,Xiaomi TV,re:mitv.*,AKien+device-list
+,IP Camera,IP Camera,re:gwipc[-_. ].*,AKien+device-list
+__unknown__,IP Camera,__unknown__,re:nomi[-_. ]?ipc.*,device-list
+APTEK,Router,APTEK Router,,AKien
+Ruijie,Router,Ruijie RG-EG105GW(T),,AKien
+Ruijie,Router,Ruijie RG-EW1200,,AKien
+Ruijie,Router,Ruijie RG-EW1300G,,AKien
+Ruijie,Router,Ruijie RG-EW1800GX,,AKien
+Ruijie,Router,Ruijie RG-EW3000GX,,AKien
+Ruijie,Router,Ruijie RG-EW300N,,AKien
+ZTE,Router,ZTE Router,,AKien
+ZTE,Router,ZTE ZXHN E1600,,AKien
+Aruba,Access Point,Aruba AP,,AKien
+Ruijie,Access Point,Ruijie RG-EST310,,AKien
+Ruijie,Access Point,Ruijie RG-RAP1200(F),,AKien
+Ruijie,Access Point,Ruijie RG-RAP2200F,,AKien
+Ruijie,Access Point,Ruijie RG-RAP2260(G),,AKien
+Ruijie,Access Point,Ruijie RG-RAP6262G,,AKien
+Tenda,Access Point,TendaMesh,,AKien
+TP-Link,Access Point,TP-Link EAP110,,AKien
+TP-Link,Access Point,TP-Link EAP115,,AKien
+TP-Link,Access Point,TP-Link EAP223,,AKien
+TP-Link,Access Point,TP-Link EAP225,,AKien
+TP-Link,Access Point,TP-Link EAP245,,AKien
+VNPT Tech,Access Point,iGate EW12SX,,AKien
+Apple,,Apple Vision Pro,apple vision pro,device-list
+ASUS,,ASUS ROG Ally,rog ally,device-list
+Ayaneo,,Ayaneo,ayaneo,device-list
+Brother,,,re:br[nw][0-9a-f]{12},device-list
+Canon,,Canon imageCLASS,imageclass,device-list
+Canon,,Canon MAXIFY,maxify,device-list
+Canon,,Canon PIXMA,pixma,device-list
+Epson,,,re:epson[0-9a-f]{6},device-list
+Epson,,Epson EcoTank,ecotank,device-list
+Epson,,Epson WorkForce,epson workforce,device-list
+GPD,,GPD Win,gpd win 4|gpd win max 2,device-list
+HP,,,re:(?:hp|npi)[0-9a-f]{6},device-list
+HP,,HP DeskJet,deskjet,device-list
+HP,,HP LaserJet,laserjet,device-list
+HP,,HP OfficeJet,officejet,device-list
+HP,,HP Smart Tank,hp smart tank,device-list
+HTC,,HTC VIVE Focus,vive focus|vive focus 3|vive focus vision,device-list
+HTC,,HTC VIVE XR,vive xr elite,device-list
+Lenovo,,Lenovo Legion Go,legion go|legion go s,device-list
+Meta,,Meta Quest,quest 2|quest 3|quest 3s|quest pro|oculus quest,device-list
+Microsoft,,Microsoft HoloLens,hololens|hololens 2,device-list
+Microsoft,,Xbox One,xbox one,device-list
+Microsoft,,Xbox Series X/S,xbox series x|xbox series s,device-list
+MSI,,MSI Claw,msi claw|msi claw 8,device-list
+Nintendo,,Nintendo Switch,nintendo switch|nintendo switch oled|nintendo switch lite,device-list
+Nintendo,,Nintendo Switch 2,nintendo switch 2,device-list
+PICO,,PICO 4,pico 4|pico 4 ultra|pico neo 3,device-list
+Ricoh,,,re:rnp[0-9a-f]{12},device-list
+Samsung,,Samsung Galaxy XR,galaxy xr|samsung xr,device-list
+Sony,,PlayStation 4,ps4|playstation 4,device-list
+Sony,,PlayStation 5,ps5|playstation 5,device-list
+Sony,,PlayStation Portal,playstation portal,device-list
+Valve,,Steam Deck,steam deck,device-list
+Xerox,,,re:xrx[0-9a-f]{12},device-list
+Xerox,,Xerox Phaser,phaser,device-list
+Xerox,,Xerox VersaLink,versalink,device-list

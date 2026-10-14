@@ -1,75 +1,73 @@
-# Rule hostname từ catalog thiết bị
+# Rule hostname từ danh sách thiết bị
 
 ## Phạm vi
 
-Bổ sung rule A (regex, first-match-wins) cho cascade hostname từ danh sách thiết bị hiện nay
-(`Search/device-list.md`). Không đổi feature/train của fingerprint, OS hay expert B.
+Rule A (regex, first-match-wins) của cascade hostname được sinh từ **một file danh sách thiết bị**
+`pipeline/device_list.csv`. File gộp thiết bị của Data_AKien (`all_data_1604.csv`) và danh sách
+thiết bị hiện nay (`device-list.md`). Không đổi feature/train của fingerprint, OS hay expert B.
 
 | File | Vai trò |
 |---|---|
-| `pipeline/hostname_catalog.csv` | Nguồn sửa tay: mỗi dòng một thiết bị và cách người dùng gõ nó trong hostname |
-| `pipeline/hostname_catalog.py` | Sinh regex, sắp thứ tự, đối chiếu nhãn thật, ghi rule đã nhận |
-| `pipeline/hostname_catalog_rules.json` | Rule + hierarchy mà phần C của 05 nạp sau rule mặc định của 09 |
-| `pipeline/hostname_catalog_report.csv` | Thống kê từng (dòng, head), không commit (`*.csv`) |
+| `pipeline/device_list.csv` | File chung, sửa tay: mỗi dòng một thiết bị |
+| `pipeline/hostname_catalog.py` | Sinh regex, sắp thứ tự, đối chiếu nhãn thật, giữ rule đạt |
+| `05_train.ipynb` phần C | `HN_DEVICE_CATALOG` trỏ tới file CSV; sinh rule ở C2 mỗi lần chạy |
+| `Models/<RUN>/train/hostname_catalog*.{csv,json}` | Bản sao CSV, rule đã sinh và report của run đó |
 
-## Cột catalog
+## Cột
 
 | Cột | Ý nghĩa |
 |---|---|
 | `make`, `type`, `model` | Nhãn trả ra; để trống head nào thì dòng không chốt head đó |
-| `names` | Tên trong hostname, cách nhau `\|`: `s24 ultra\|s24u`. Dấu cách/chữ-số cho phép `-_. ` hoặc dính liền |
-| `prefixes`, `require_prefix` | Tiền tố hãng (`galaxy\|samsung`). `1` = bắt buộc, dùng khi tên trần trùng hãng khác (`oppo a18`, `itel s24`) |
-| `pattern`, `examples` | Regex viết tay (bắt đầu `(?i)`, cú pháp RE2) và hostname mẫu bắt buộc đi kèm |
-| `group` | Nhóm báo cáo: phone, tablet, laptop, tv, gaming_xr, printer, camera, model_code |
+| `hostname_names` | Tên người dùng gõ trong hostname, cách nhau `\|`: `s24 ultra\|s24u`. Để trống thì tự sinh từ model |
+| `source` | Ghi chú nguồn (`AKien`, `device-list`), không dùng khi train |
 
-Tên cần ranh giới ký tự hai đầu: `s24` khớp `s24-cua-an`, `an-s-s24`, `galaxy-s24` nhưng không khớp
-`s240` hay bên trong `s24ultra`. `model = __unknown__` là rule chặn: hostname khớp thì head đó dừng ở A,
-không trả nhãn và không gọi expert, nên kết quả gói tin giữ nguyên. Camera `nomi-ipc-s21fe` dùng
-cách này để không thành Galaxy S21 FE.
-
-Dùng lại đúng chính tả nhãn đã có trong dataset (`Samsung A51`, `Samsung Galaxy A15 5G`,
-`Redmi Note 10`), nếu không sẽ thành lớp mới. Script in `Nhãn viết khác dataset` khi phát hiện.
-Type chỉ dùng 8 type hiện có; gaming/XR/máy in không có type phù hợp nên chỉ chốt make/model.
+- Dấu cách giữa chữ và số tùy ý: `s24 ultra`, `s24ultra`, `s 24 ultra` sinh cùng regex, cho phép
+  `-_. ` hoặc dính liền. Cần ranh giới hai đầu: `s24` khớp `s24-cua-an`, `an-s-s24`, `galaxy-s24`,
+  không khớp `s240`.
+- Tên viết kèm hãng (`vivo y27`, `galaxy a12`) chỉ khớp khi hostname có hãng; tên trần (`a12`)
+  khớp cả có lẫn không có hãng. Tên trần ngắn dễ trùng hãng khác thì ghi kèm hãng.
+- Tự sinh: bỏ tên hãng và `Galaxy` ở đầu model, thêm bản bỏ `5G/4G` (`Samsung Galaxy A15 5G` →
+  `a15 5g|a15`). Không sinh khi chỉ còn từ chung (`ZTE Router`) hoặc trùng tên của dòng khác nhãn.
+- `re:<regex>` (đứng cuối ô) là regex viết tay, cú pháp RE2: máy in `re:br[nw][0-9a-f]{12}`.
+- `model = __unknown__` là rule chặn: hostname khớp thì head đó dừng ở A, không gọi expert, kết quả
+  gói tin giữ nguyên. Camera `nomi-ipc-s21fe` dùng cách này để không thành Galaxy S21 FE.
+- Dùng đúng chính tả nhãn đã có (`Samsung A51`, `Samsung Galaxy A15 5G`), nếu không sẽ thành lớp mới;
+  05 in `Nhãn viết khác dataset` khi phát hiện. Type chỉ dùng 8 type hiện có; gaming/XR/máy in để trống.
 
 ## Thứ tự và kiểm tra
 
-Dòng A phải chạy trước dòng B khác nhãn nếu pattern B khớp hostname mẫu của A (S24 Ultra trước
-S24, OPPO A18 trước A18). Script sắp tô-pô theo quan hệ này; chồng lấn vòng tròn thì báo lỗi.
-Hòa thì pattern viết tay (mã máy, tiền tố camera, TV OS) đi trước tên do người dùng gõ.
+Mỗi tên là một rule riêng. Rule A phải chạy trước rule B khác nhãn nếu B khớp hostname mẫu của A
+(S24 Ultra trước S24); script sắp tô-pô theo quan hệ này. Hai thiết bị khác nhãn ghi cùng một tên
+thì báo lỗi, chỉ ra dòng cần sửa. Hòa thì regex viết tay đi trước tên.
 
-Mỗi (dòng, head) được chấm trên `train + validation` của `hostname_dataset_split.csv`, theo đúng
-cascade: rule mặc định 09 trước, catalog sau. Test chỉ để báo cáo, không dùng chọn rule.
+Mỗi (tên, head) được chấm trên `train + validation` của split hostname trong 05, đúng thứ tự cascade:
+rule mặc định 09 trước, danh sách sau. Test chỉ để báo cáo.
 
-- `correct`; `compatible` khi nhãn thật là nhãn chung hơn cùng hãng (`Google Pixel` với
-  `Google Pixel 7`, `OPPO Reno` với `OPPO Reno6`); `Samsung A51` = `Samsung Galaxy A51`.
+- `correct`; `compatible` khi nhãn thật chung hơn cùng hãng (`Google Pixel` với `Google Pixel 7`);
+  `Samsung A51` = `Samsung Galaxy A51`.
 - `wrong` cả khi head đang chấm chưa có nhãn nhưng head khác mâu thuẫn (host là IP Camera).
-- Loại khi có ≥ 5 mẫu chấm và precision < 0,95, hoặc < 5 mẫu mà sai nhiều hơn đúng.
-  Make/type bị loại thì loại cả dòng (`rejected_row`).
+- Loại khi ≥ 5 mẫu chấm và precision < 0,95, hoặc < 5 mẫu mà sai nhiều hơn đúng. Make/type bị loại
+  thì loại cả tên đó (`rejected_row`). Tên khác cùng dòng không bị ảnh hưởng.
 - `unverified`: chưa có mẫu, thường là máy mới (S26, Fold7). Vẫn được dùng.
 
-Nhãn `Blu Vivo One Plus` của AKIEN gán cho `oneplus-9-pro...` không được dùng làm truth.
+## Cập nhật danh sách thiết bị
 
-## Cập nhật catalog
-
-```powershell
-python -X utf8 Code/pipeline/hostname_catalog.py --split Models/<RUN>/train/hostname_dataset_split.csv
-python -X utf8 -m unittest discover -s Code/pipeline -p "test_hostname_catalog.py" -v
-```
-
-Đọc `hostname_catalog_report.csv` (cột `status`, `wrong_examples`) trước khi train. Sau đó chạy phần C
-của 05, rồi 09 → 12 → 13 cùng `RUN`. Test kiểm từng hostname mẫu của mọi dòng ra đúng nhãn của chính
-nó qua cả cascade, pattern không dùng cú pháp ngoài RE2, và JSON khớp SHA của catalog.
-
-## Kết quả lần đầu (13/10/2026, split của run `20261012_142446`)
-
-784 dòng → 881 rule (gộp rule liền nhau cùng nhãn, mỗi pattern < 2.000 ký tự để DFA RE2 không
-hết bộ nhớ; 881 + 17 rule mặc định khớp Python/onnxruntime trên 29.255 hostname). Model: 126 verified, 625 unverified (chưa có mẫu), 26 bị loại. Trên test
-giữ riêng: model 17.260 đúng / 23 sai (0,9987), make 0,9986, type 0,9998.
-
-Bị loại chủ yếu là tên Samsung trần: `a12`, `a31`, `a52`… cũng là hostname OPPO trong AKIEN, và
-AKIEN gán `s24`/`s25` trần cho bản Ultra. Dòng bắt buộc tiền tố (`galaxy-a12`) vẫn được giữ;
-hostname trần do expert B xử lý như trước. Hostname Xiaomi có mã máy (`m2006c3lg-…`) được 14 rule
-mã máy lấy từ train+validation (≥ 5 mẫu, một nhãn ≥ 98%) bắt trước phần tên người dùng gõ.
+1. Sửa/thêm dòng trong `Code/pipeline/device_list.csv` (Excel lưu dạng CSV UTF-8).
+2. (Tùy chọn) xem trước rule nào bị loại, khoảng 1,5 phút:
+   ```powershell
+   python -X utf8 Code/pipeline/hostname_catalog.py --split Models/<RUN>/train/hostname_dataset_split.csv
+   ```
+   rồi đọc `Code/pipeline/hostname_catalog_report.csv` (cột `line` = `<dòng CSV>:<tên>`, `status`,
+   `wrong_examples`).
+3. Chạy phần C của 05 → ghi `RUN` mới vào 09 và 12 (13 nếu cần TFLite) → chạy lần lượt.
 
 Laptop Windows (`DESKTOP-xxxx`), Android 10+ (`android-<hex>` hoặc không gửi hostname) và iPhone
-(chỉ "iPhone") không chứa đời máy; catalog không giúp được các trường hợp này.
+(chỉ "iPhone") không chứa đời máy; danh sách không giúp được các trường hợp này.
+
+## Lịch sử
+
+- 13/10/2026, run `20261013_094051`: catalog 784 dòng (9 cột) → 881 rule. Model: 126 verified,
+  625 unverified, 26 bị loại; test giữ riêng model 0,9987, make 0,9986, type 0,9998.
+- 14/10/2026: chuyển sang `device_list.csv` (849 thiết bị = 143 chỉ AKien + 578 chỉ device-list.md
+  + 128 cả hai), dựng lại từ rule trong contract `20261013_094051` cộng nhãn AKien. Trên split của
+  run đó: 964 rule; rule A trả lời model cho 18.740 hostname test (trước 17.554), precision 0,9984.
