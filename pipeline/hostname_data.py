@@ -16,6 +16,18 @@ from hostname_support import HEADS, normalize_hostname
 MISSING_LABELS = {"", "null", "none", "nan", "<missing>", "<na>",
                   "__unknown__", "unknown"}
 PSEUDO_MAKES = {"generic laptop", "camera", "linova/linux"}
+# AKIEN gán cùng một máy hai nhãn theo cách hostname viết ("a51-cua-an" → "Samsung A51",
+# "galaxy-a51-cua-an" → "Samsung Galaxy A51"); hostname không phân biệt được bản 5G.
+# device_list.csv dùng đúng tên chuẩn bên phải.
+MODEL_ALIAS = {
+    "Samsung A10": "Samsung Galaxy A10", "Samsung A20": "Samsung Galaxy A20",
+    "Samsung A21": "Samsung Galaxy A21", "Samsung A33": "Samsung Galaxy A33 5G",
+    "Samsung A50": "Samsung Galaxy A50", "Samsung A51": "Samsung Galaxy A51",
+    "Samsung A52s": "Samsung Galaxy A52s 5G", "Samsung A70": "Samsung Galaxy A70",
+    "Samsung Galaxy Note20 5G": "Samsung Galaxy Note20",
+    "Samsung Galaxy Note20 Ultra 5G": "Samsung Galaxy Note20 Ultra",
+    "Samsung Galaxy S10 5G": "Samsung Galaxy S10", "Samsung Galaxy S20 FE 5G": "Samsung Galaxy S20 FE",
+}
 
 
 def clean_label(value, head):
@@ -26,6 +38,8 @@ def clean_label(value, head):
         if label.casefold() in PSEUDO_MAKES or label.casefold().startswith("generic "):
             return pd.NA
         return {"VIVO": "Vivo"}.get(label, label)
+    if head == "model":
+        return MODEL_ALIAS.get(label, label)
     return {"Mobile Phone": "Smartphone"}.get(label, label) if head == "type" else label
 
 

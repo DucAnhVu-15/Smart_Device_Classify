@@ -325,15 +325,7 @@ Realme,Smartphone,Realme GT 7 Pro,realme gt7 pro,device-list
 Realme,Smartphone,Realme Narzo 60,narzo 60,device-list
 Realme,Smartphone,Realme Narzo 70,narzo 70,device-list
 Realme,Smartphone,Realme Narzo 80,narzo 80,device-list
-Samsung,Smartphone,Samsung A10,a10|galaxy a10|samsung a10,AKien+device-list
-Samsung,Smartphone,Samsung A20,a20|galaxy a20|samsung a20,AKien+device-list
-Samsung,Smartphone,Samsung A21,,AKien
-Samsung,Smartphone,Samsung A33,a33|galaxy a33|samsung a33,AKien+device-list
-Samsung,Smartphone,Samsung A50,a50|galaxy a50|samsung a50,AKien+device-list
-Samsung,Smartphone,Samsung A51,a51|galaxy a51|samsung a51,AKien+device-list
-Samsung,Smartphone,Samsung A52s,a52s|galaxy a52s|samsung a52s,AKien+device-list
 Samsung,Smartphone,Samsung A56,a56|galaxy a56|samsung a56,AKien+device-list
-Samsung,Smartphone,Samsung A70,galaxy a70|samsung a70|a70,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy 3,,AKien
 Samsung,Smartphone,Samsung Galaxy A Quantum,,AKien
 Samsung,Smartphone,Samsung Galaxy A01,a01|galaxy a01|samsung a01,AKien+device-list
@@ -348,7 +340,7 @@ Samsung,Smartphone,Samsung Galaxy A04s,a04s|galaxy a04s|samsung a04s,AKien+devic
 Samsung,Smartphone,Samsung Galaxy A05,a05|galaxy a05|samsung a05,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A05s,a05s|galaxy a05s|samsung a05s,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A06,a06|galaxy a06|samsung a06,AKien+device-list
-Samsung,Smartphone,Samsung Galaxy A10,,AKien
+Samsung,Smartphone,Samsung Galaxy A10,a10|galaxy a10|samsung a10,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A10e,,AKien
 Samsung,Smartphone,Samsung Galaxy A10s,a10s|galaxy a10s|samsung a10s,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A11,a11|galaxy a11|samsung a11,AKien+device-list
@@ -358,7 +350,7 @@ Samsung,Smartphone,Samsung Galaxy A14,a14|galaxy a14|samsung a14,AKien+device-li
 Samsung,Smartphone,Samsung Galaxy A15 5G,a15|galaxy a15|samsung a15,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A16,galaxy a16|samsung a16,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A17,a17|galaxy a17|samsung a17,device-list
-Samsung,Smartphone,Samsung Galaxy A20,,AKien
+Samsung,Smartphone,Samsung Galaxy A20,a20|galaxy a20|samsung a20,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A20s,a20s|galaxy a20s|samsung a20s,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A21,,AKien
 Samsung,Smartphone,Samsung Galaxy A21s,a21s|galaxy a21s|samsung a21s,AKien+device-list
@@ -371,22 +363,22 @@ Samsung,Smartphone,Samsung Galaxy A30,a30|galaxy a30|samsung a30,AKien+device-li
 Samsung,Smartphone,Samsung Galaxy A30s,a30s|galaxy a30s|samsung a30s,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A31,galaxy a31|samsung a31,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A32,galaxy a32|samsung a32,AKien+device-list
-Samsung,Smartphone,Samsung Galaxy A33 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy A33 5G,a33|galaxy a33|samsung a33,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A34 5G,samsung a34|galaxy a34,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A35,galaxy a35|samsung a35,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A36,a36|galaxy a36|samsung a36,device-list
 Samsung,Smartphone,Samsung Galaxy A42 5G,,AKien
-Samsung,Smartphone,Samsung Galaxy A50,,AKien
+Samsung,Smartphone,Samsung Galaxy A50,a50|galaxy a50|samsung a50,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A50s,a50s|galaxy a50s|samsung a50s,AKien+device-list
-Samsung,Smartphone,Samsung Galaxy A51,,AKien
+Samsung,Smartphone,Samsung Galaxy A51,a51|galaxy a51|samsung a51,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A52,galaxy a52|samsung a52,AKien+device-list
-Samsung,Smartphone,Samsung Galaxy A52s 5G,,AKien
+Samsung,Smartphone,Samsung Galaxy A52s 5G,a52s|galaxy a52s|samsung a52s,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A53 5G,galaxy a53|samsung a53,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A54 5G,galaxy a54|samsung a54,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A55,a55|galaxy a55|samsung a55,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A6,,AKien
 Samsung,Smartphone,Samsung Galaxy A7,,AKien
-Samsung,Smartphone,Samsung Galaxy A70,,AKien
+Samsung,Smartphone,Samsung Galaxy A70,galaxy a70|samsung a70|a70,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A71,galaxy a71|samsung a71,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A72,galaxy a72|samsung a72,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy A73 5G,galaxy a73|samsung a73,AKien+device-list
@@ -433,19 +425,15 @@ Samsung,Smartphone,Samsung Galaxy Note 20 Ultra,,AKien
 Samsung,Smartphone,Samsung Galaxy Note10,,AKien
 Samsung,Smartphone,Samsung Galaxy Note10 Lite,,AKien
 Samsung,Smartphone,Samsung Galaxy Note20,,AKien
-Samsung,Smartphone,Samsung Galaxy Note20 5G,,AKien
 Samsung,Smartphone,Samsung Galaxy Note20 Ultra,,AKien
-Samsung,Smartphone,Samsung Galaxy Note20 Ultra 5G,,AKien
 Samsung,Smartphone,Samsung Galaxy Note8,,AKien
 Samsung,Smartphone,Samsung Galaxy Note9,,AKien
-Samsung,Smartphone,Samsung Galaxy S10,s10,AKien+device-list
-Samsung,Smartphone,Samsung Galaxy S10 5G,s10 5g,AKien+device-list
+Samsung,Smartphone,Samsung Galaxy S10,s10|s10 5g,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy S10 Lite,s10 lite,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy S10+,s10 plus,device-list
 Samsung,Smartphone,Samsung Galaxy S10e,s10e,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy S20,s20,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy S20 FE,s20fe,AKien+device-list
-Samsung,Smartphone,Samsung Galaxy S20 FE 5G,,AKien
 Samsung,Smartphone,Samsung Galaxy S20 Ultra,s20 ultra,AKien+device-list
 Samsung,Smartphone,Samsung Galaxy S20+,s20 plus,device-list
 Samsung,Smartphone,Samsung Galaxy S21,s21,AKien+device-list
@@ -695,7 +683,7 @@ OPPO,Tablet,OPPO Pad 3,oppo pad 3,device-list
 Samsung,Tablet,Samsung Galaxy Tab A,tab a8 0|tab a10 1,AKien+device-list
 Samsung,Tablet,Samsung Galaxy Tab A7 (2020),tab a7,AKien+device-list
 Samsung,Tablet,Samsung Galaxy Tab A7 Lite,tab a7 lite,AKien+device-list
-Samsung,Tablet,Samsung Galaxy Tab A8,tab a8,AKien+device-list
+Samsung,Tablet,Samsung Galaxy Tab A8,re:(?i)(?:.*[^a-z0-9])?tab[-_. ]?a[-_. ]?8(?:[^a-z0-9](?:[^0].*)?)?,AKien+device-list
 Samsung,Tablet,Samsung Galaxy Tab A9,tab a9,AKien+device-list
 Samsung,Tablet,Samsung Galaxy Tab A9+,tab a9 plus,device-list
 Samsung,Tablet,Samsung Galaxy Tab S10+,tab s10 plus,device-list

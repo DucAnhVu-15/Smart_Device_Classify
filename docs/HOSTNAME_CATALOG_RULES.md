@@ -31,8 +31,10 @@ thiết bị hiện nay (`device-list.md`). Không đổi feature/train của fi
 - `re:<regex>` (đứng cuối ô) là regex viết tay, cú pháp RE2: máy in `re:br[nw][0-9a-f]{12}`.
 - `model = __unknown__` là rule chặn: hostname khớp thì head đó dừng ở A, không gọi expert, kết quả
   gói tin giữ nguyên. Camera `nomi-ipc-s21fe` dùng cách này để không thành Galaxy S21 FE.
-- Dùng đúng chính tả nhãn đã có (`Samsung A51`, `Samsung Galaxy A15 5G`), nếu không sẽ thành lớp mới;
-  05 in `Nhãn viết khác dataset` khi phát hiện. Type chỉ dùng 8 type hiện có; gaming/XR/máy in để trống.
+- Dùng đúng chính tả nhãn đã có (`Samsung Galaxy A51`, `Samsung Galaxy A15 5G`), nếu không sẽ thành lớp mới;
+  05 in `Nhãn viết khác dataset` khi phát hiện. AKIEN viết một máy thành hai nhãn (`Samsung A51` /
+  `Samsung Galaxy A51`, `Galaxy S10` / `Galaxy S10 5G`); `MODEL_ALIAS` trong `hostname_data.py` gộp
+  về tên chuẩn khi nạp dữ liệu, và danh sách báo lỗi nếu một dòng dùng tên alias. Type chỉ dùng 8 type hiện có; gaming/XR/máy in để trống.
 
 ## Thứ tự và kiểm tra
 
@@ -44,7 +46,10 @@ Mỗi (tên, head) được chấm trên `train + validation` của split hostna
 rule mặc định 09 trước, danh sách sau. Test chỉ để báo cáo.
 
 - `correct`; `compatible` khi nhãn thật chung hơn cùng hãng (`Google Pixel` với `Google Pixel 7`);
-  `Samsung A51` = `Samsung Galaxy A51`.
+  `Samsung A51` = `Samsung Galaxy A51`. Bảng `hostname_comparison.csv` của 05 cũng có cột
+  `compatible` và `selective_accuracy_compatible` theo cùng cách chấm này; gate vẫn dùng khớp chính xác.
+- C_cascade của 05 chạy như release khi gói tin chưa biết make: model suy ra make còn trống
+  (`source = model_implies`), model expert trái make bị bỏ, make trái make của model rule bị bỏ.
 - `wrong` cả khi head đang chấm chưa có nhãn nhưng head khác mâu thuẫn (host là IP Camera).
 - Loại khi ≥ 5 mẫu chấm và precision < 0,95, hoặc < 5 mẫu mà sai nhiều hơn đúng. Make/type bị loại
   thì loại cả tên đó (`rejected_row`). Tên khác cùng dòng không bị ảnh hưởng.

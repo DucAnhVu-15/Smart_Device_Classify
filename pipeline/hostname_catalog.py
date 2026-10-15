@@ -30,6 +30,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from hostname_data import MODEL_ALIAS
 from hostname_support import HEADS, UNKNOWN, normalize_hostname
 
 FORMAT = "sdc-hostname-catalog-v1"
@@ -114,6 +115,9 @@ def load_catalog(path):
     for line, device in enumerate(read_devices(path), start=2):
         if not any(device[h] for h in HEADS):
             raise ValueError(f"Dòng {line}: cần ít nhất một nhãn make/type/model")
+        if device["model"] in MODEL_ALIAS:
+            raise ValueError(f"Dòng {line}: dùng tên chuẩn {MODEL_ALIAS[device['model']]!r} "
+                             f"thay cho {device['model']!r} (MODEL_ALIAS trong hostname_data.py)")
         # Regex có thể chứa "|", nên "re:" đứng cuối ô và lấy hết phần còn lại.
         plain, _, regex = device["hostname_names"].partition("re:")
         names = split_list(plain) + (["re:" + regex.strip()] if regex.strip() else [])
@@ -130,8 +134,7 @@ def load_catalog(path):
     for line, device, names, auto in devices:
         if auto:
             label = device["model"] or device["make"]
-            # Tên tự sinh trùng tên của dòng khác nhãn thì bỏ: không biết máy nào đúng
-            # (AKien có 'Samsung A21' lẫn 'Samsung Galaxy A21').
+            # Tên tự sinh trùng tên của dòng khác nhãn thì bỏ: không biết máy nào đúng.
             names = [n for n in derive_names(device["make"], device["model"])
                      if owners[tuple(pieces(n))] == {label}]
         if not names:
