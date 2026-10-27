@@ -18,8 +18,11 @@ nhất quán model/hãng chưa được mở rộng trong thay đổi tập trun
 
 Sessions hiện không có hostname, nên cần phép nối nói trên. Nhãn make/type/model trong
 sessions không thay thế bảng nhãn verified; loader không sử dụng nhãn dự đoán.
-Không dùng `device_observations.jsonl` làm train vì đang là bộ test và chưa có bảng
-nhãn đầy đủ. Không tự suy ra hãng/model từ OUI, hostname hoặc review_note.
+`device_observations.jsonl` (router MQTT) vào train qua `predata/06_add_router_observations.ipynb`.
+06 tự gán nhãn fingerprint (FIELD verified trùng hostname → luật `device_list.csv` → Windows chung),
+nhưng `Data/features/dhcp_features_router.csv` cho expert này chỉ gồm thiết bị split train có nhãn
+từ FIELD verified hoặc nhãn tay (`verified=1`): nhãn sinh từ luật hostname mà dạy lại expert hostname
+thì vòng tròn. Thiết bị split test giữ riêng ở `Data/router_obs/`. Không tự suy ra hãng/model từ OUI.
 
 Chuẩn hóa hostname NFKC/lower/whitespace; `Mobile Phone` → `Smartphone`, `VIVO` → `Vivo`.
 Nhãn thiếu, `Null`, `__unknown__` không dùng làm truth. Head make loại các nhãn giả

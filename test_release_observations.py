@@ -29,7 +29,7 @@ from pipeline.hostname_support import normalize_hostname, run_onnx
 # ===== Sửa đường dẫn tại đây, sau đó chỉ cần: python test_release_observations.py =====
 ROOT = Path(r"D:\01.AI_Security\02.SDC")
 DATA_PATH = ROOT / "server" /"data"/"device_observations.jsonl"
-MODEL_PATH = ROOT / "Models" / "20261014_142321" / "release" / "sdc_os.onnx"
+MODEL_PATH = ROOT / "Models" / "20261027_100150" / "release" / "sdc_os.onnx"
 # Mỗi lần chạy tạo một thư mục mới: Reports\<YYYYmmdd_HHMMSS>\release_observations.csv
 REPORT_DIR = ROOT / "Reports"
 OUTPUT_PATH = REPORT_DIR / datetime.now().strftime("%Y%m%d_%H%M%S") / "release_observations.csv"
@@ -56,6 +56,8 @@ COLUMNS = (
     "mdns_model",
 )
 HEADS = ("make", "type", "model")
+# Giả lập thiết bị không có hostname: các cột này bị ép về <missing> ở lần chạy thứ hai.
+NO_HOST_COLUMNS = ("dhcp_hostname",)
 
 
 def mode(values):
@@ -182,18 +184,32 @@ def main():
     ]
     features = [feature_row(observation) for observation in observations]
     matrix = [[row[column] for column in COLUMNS] for row in features]
+    no_host_matrix = [
+        [MISSING if column in NO_HOST_COLUMNS else row[column] for column in COLUMNS]
+        for row in features
+    ]
 
     session = ort.InferenceSession(str(args.model))
     predictions = run_onnx(session, ["output"], {"input": np.asarray(matrix, dtype=object)})[0]
+    no_host_predictions = run_onnx(
+        session, ["output"], {"input": np.asarray(no_host_matrix, dtype=object)}
+    )[0]
 
     output_rows = []
-    for index, (observation, row, prediction) in enumerate(zip(observations, features, predictions)):
+    for index, (observation, row, prediction, no_host) in enumerate(
+        zip(observations, features, predictions, no_host_predictions)
+    ):
+        full = dict(zip(HEADS, prediction.astype(str)))
+        missing_host = dict(zip(HEADS, no_host.astype(str)))
         output_rows.append(
             {
                 "observation": index,
                 "mac": observation.get("mac", ""),
                 "source_hostname": observation.get("hostname", ""),
-                **dict(zip(HEADS, prediction.astype(str))),
+                **full,
+                # Kết quả khi bỏ hostname (dhcp_hostname = <missing>), để so độ phụ thuộc vào hostname.
+                **{f"no_host_{head}": missing_host[head] for head in HEADS},
+                "no_host_changed": ",".join(h for h in HEADS if full[h] != missing_host[h]),
                 # Đủ 12 cột input model nhận (TLS, token DNS/mDNS/SNI, L0...), đúng thứ tự contract.
                 **{("input_dhcp_hostname" if c == "dhcp_hostname" else c): row[c] for c in COLUMNS},
             }
@@ -206,6 +222,9 @@ def main():
         writer.writerows(output_rows)
 
     print(json.dumps(output_rows, ensure_ascii=False, indent=2))
+    for head in HEADS:
+        changed = sum(head in row["no_host_changed"].split(",") for row in output_rows)
+        print(f"Missing hostname -> {head} đổi: {changed}/{len(output_rows)}")
     print(f"Wrote {args.output}")
 
 

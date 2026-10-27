@@ -131,7 +131,8 @@ Code/
 │   │   ├── 02_extract_capture.ipynb       pcap tự thu → Data/features/*_capture.csv
 │   │   ├── 02b_extract_capture_by_ip.ipynb pcap gắn thiết bị theo IP → Data/features/test_pcap_collection/
 │   │   ├── 03_build_dataset.ipynb         *_all.csv → Data/sessions_verified.parquet
-│   │   └── 04_add_capture_devices.ipynb   gộp thiết bị FIELD → sessions(_verified).parquet
+│   │   ├── 04_add_capture_devices.ipynb   gộp thiết bị FIELD → sessions(_verified).parquet
+│   │   └── 06_add_router_observations.ipynb observation MQTT của router → FIELD train + bộ test giữ riêng
 │   ├── train_model/             2. train — MỘT file
 │   │   └── 05_train.ipynb                 → Models/<ts>/train/  iden.joblib (make/type/model) + os.joblib (head OS)
 │   └── out_model/               3. đóng gói model
@@ -181,6 +182,7 @@ một run cụ thể.
 | `02b` | `CAPTURE_DIR/test_pcap_collection.pcap`, `device_labels_capture.csv` | `Data/features/test_pcap_collection/` | — |
 | `03` | `Data/features/*_all.csv`, bảng nhãn | `Data/sessions_verified.parquet` | — |
 | `04` | pcap tự thu (chạy lại `02`), `Data/sessions.parquet` | `sessions.parquet`, `sessions_verified.parquet` | — |
+| `06` | `server/data/device_observations.jsonl` (nhãn tự gán; sửa tay tuỳ chọn ở `Data/router_obs/device_labels_router.csv`) | `Data/router_obs/` (snapshot, split, bộ test); `APPLY=True`: `sessions(_verified).parquet`, `dhcp_features_router.csv`, `device_os_router.csv` | — |
 | `05` | `sessions_verified.parquet`; đánh giá cần `test_model/data_test/out/windows.jsonl` | run mới `Models/<ts>/train/` | — |
 | `09` | `<ts>/train/`, `sessions_verified.parquet`, `*_capture.csv` | `<ts>/iden/sdc_iden.onnx` + báo cáo | `RUN` |
 | `12` | `<ts>/iden/` + `<ts>/train/`; mục 5 cần `sessions_verified.parquet`, `*_capture.csv` | `<ts>/release/` | `RUN` |
