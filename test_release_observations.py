@@ -28,8 +28,8 @@ from pipeline.hostname_support import normalize_hostname, run_onnx
 
 # ===== Sửa đường dẫn tại đây, sau đó chỉ cần: python test_release_observations.py =====
 ROOT = Path(r"D:\01.AI_Security\02.SDC")
-DATA_PATH = ROOT / "server" /"data"/"device_observations.jsonl"
-MODEL_PATH = ROOT / "Models" / "20261027_100150" / "release" / "sdc_os.onnx"
+DATA_PATH = ROOT / "device_observations_DAV.jsonl"
+MODEL_PATH = ROOT / "Models" / "20261028_103727" / "release" / "sdc_os.onnx"
 # Mỗi lần chạy tạo một thư mục mới: Reports\<YYYYmmdd_HHMMSS>\release_observations.csv
 REPORT_DIR = ROOT / "Reports"
 OUTPUT_PATH = REPORT_DIR / datetime.now().strftime("%Y%m%d_%H%M%S") / "release_observations.csv"
@@ -41,6 +41,9 @@ MODEL_RE = re.compile(r"(?:^|[;\s])model=([^;\s]+)", re.IGNORECASE)
 # Xiaomi `_mi-connect._udp`: tên instance là JSON, `nm` là tên máy, vd.
 # {"nm":"Redmi Note 10","as":"[8194]","ip":"122"}._mi-connect._udp.local
 MI_CONNECT_RE = re.compile(r'\{.*?"nm"\s*:\s*"([^"]+)".*\}\._mi-connect\._udp\.local\.?', re.IGNORECASE)
+# Google Cast / Android TV: TXT của `<instance>._googlecast._tcp.local` có `md=` là tên model, vd.
+# id=...;md=VNPT SmartBox 3;fn=VNPT SmartBox 3  (`fn` là tên người dùng đặt nên không dùng).
+CAST_MD_RE = re.compile(r"(?:^|;)md=([^;]+)", re.IGNORECASE)
 COLUMNS = (
     "dhcp_prl",
     "tls_fp",
@@ -104,7 +107,16 @@ def mdns_model(observations):
                 match = MODEL_RE.search(str(entry.get("value", "")))
                 if match:
                     return match.group(1).strip().strip(".") or MISSING
-    # Không có `model=` thì lấy tên máy Xiaomi, chuẩn hoá như hostname (bảng L0 ở 09 dùng chữ thường).
+    # Không có `model=` thì lấy `md=` của Google Cast, chuẩn hoá như hostname (bảng L0 ở 09 dùng chữ thường).
+    for observation in observations:
+        for section in ("answers", "authorities", "additionals"):
+            for entry in observation.get(section, []):
+                if "._googlecast._tcp" not in str(entry.get("name", "")).lower():
+                    continue
+                match = CAST_MD_RE.search(str(entry.get("value", "")))
+                if match:
+                    return normalize_hostname(match.group(1)) or MISSING
+    # Không có cả hai thì lấy tên máy Xiaomi, chuẩn hoá như hostname (bảng L0 ở 09 dùng chữ thường).
     for observation in observations:
         for section in ("questions", "answers", "authorities", "additionals"):
             for entry in observation.get(section, []):
